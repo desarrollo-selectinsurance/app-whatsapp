@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" data-bs-toggle="offcanvas" href="#Conversaciones" role="button" aria-controls="Conversaciones"><?= $_SESSION['Admin'] ?></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#NavAdmin" aria-controls="NavAdmin" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="NavAdmin">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="?controller=Inicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?controller=AddSala">Abrir Sala</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Config
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="?controller=formAccesWebToken">Configuracion</a></li>
+                        <li><a class="dropdown-item" href="?controller=Preferences">Preferencias</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="?controller=Cerrar">Cerrar</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+<div class="offcanvas offcanvas-start text-center my-5" tabindex="-1" id="Conversaciones" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <div class="container-fluid">
+            <div class="row">
+                <center>
+                    <h3><i>Select Insurance</i></h3>
+                </center>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form id="frmFiltroDialogNav">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="filtrarNav" id="filtrarNav" placeholder="Usuario" autocomplete="off">
+                            <label for="filtrarNav"><i class="fas fa-search"></i> Filtrar</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas-body ScrollMinimo shadow border" id="tbodySala">
+
+        <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+
+    </div>
+</div>
