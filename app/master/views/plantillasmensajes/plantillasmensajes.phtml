@@ -21,47 +21,38 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Plantillas de Mensajes</h6>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Accion</th>
-                                            <th>Mensaje</th>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Creador</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Accion</th>
-                                            <th>Mensaje</th>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Creador</th>
-                                        </tr>
-                                    </tfoot>
-
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        <div class="row">
+                            <div class="col-12 col-sm-4">
+                                <form id="areamensajetemplate">
+                                    <div class="col-12 col-md-12">
+                                        <input type="text" class="form-control my-2" value="<?= $usuario ?>" readonly>
+                                        <textarea name="plantillamensajes" class="form-control my-2" id="plantillamensajes" cols="30" rows="10" placeholder="Agregar una Plantilla de Mensaje"></textarea>
+                                        <button id="btnIngresarMensajeDespedida" name="btnAgregar" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</button>
+                                        <button id="btnLimpiarMensajeDespedidad" name="btnLimpiar" class="btn btn-danger"> <i class="fas fa-backspace"></i>  Limpiar</button>
+                                    </div>
+                                    <br>
+                                </form>
                             </div>
+                            <div class="col-12 col-sm-8 table-responsive text-center ScrollMinimo" style="overflow:auto; height:300px; width:500px;">
+                                <form id="form_MensajeDespedida">
+                                    <table class="table table-hover border">
+                                        <thead>
+                                            <tr>
+                                                <th>Mensajes</th>
+                                                <th>Fecha Hora</th>
+                                                <th>Creador</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tablaMostrarMensajeDespedida">
+
+                                        </tbody>
+
+                                    </table>
+
+                                </form>
+                            </div>
+                            
                         </div>
                     </div>
 

@@ -2,7 +2,12 @@ $(document).ready(function () {
     console.log('Hola desde jquery');
 
     //$.ajaxSetup({ "cache": false });//Manejo de cache de Jquery
-    $('#CodigoPais').select2({ tags: true });//llamando al componente select de la libreria select2 de jquery
+    $('#codigopais').select2({
+        theme: "bootstrap-5",
+        tags: true
+        
+
+    });//llamando al componente select de la libreria select2 de jquery
 
 
     EnviarMensajesChat();
@@ -620,8 +625,8 @@ var FiltrandoSalaNav = function () {
             }
         });
     })
-//mire por ejemplo aca, estoy haciendo un ajax y con la respuesta estoy pintando un htmles la tabla de token
-// sk no consulta nada automaticamente se ejecuta este otro ajax que es un select sin un where
+    //mire por ejemplo aca, estoy haciendo un ajax y con la respuesta estoy pintando un htmles la tabla de token
+    // sk no consulta nada automaticamente se ejecuta este otro ajax que es un select sin un where
     $.ajax({
         type: "POST",
         url: "?controller=FiltrandoSalaNav",
@@ -707,6 +712,8 @@ var ReadAgentes = function () {
             { "data": "apellido" },
             { "data": "password" },
             { "data": "admin" }
+
+            
         ]
     });
 }
@@ -945,7 +952,7 @@ var MostrarCantidadSalasChat = function () {
         type: "POST",
         url: "?controller=CantidadSalasChat",
         success: function (Respuesta) {
-            $('#CardSalasPendientes').html(Respuesta);
+            $('#TotalSalas').html(Respuesta);
             //console.log(Respuesta);
         },
         error: function (xhr, status, error) {
@@ -962,7 +969,7 @@ var MostrarCantidadSalasChatAbiertas = function () {
         type: "POST",
         url: "?controller=MostrandoChatAbiertos",
         success: function (Respuesta) {
-            $('#CardSalasAbiertas').html(Respuesta);
+            $('#SalasAbiertas').html(Respuesta);
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -981,7 +988,7 @@ var MostrarCantidadSalasChatCerradas = function () {
         dataType: "text",
         success: function (Respuesta) {
             //console.log(Respuesta);
-            $('#CardSalasCerradas').html(Respuesta);
+            $('#SalasCerradas').html(Respuesta);
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -999,7 +1006,7 @@ var MostrarCantidadSalasChatAsignadas = function () {
         url: "?controller=MostrandoChatAsignados",
         success: function (Respuesta) {
             //console.log(Respuesta);
-            $('#CardSalasAsignadas').html(Respuesta);
+            $('#SalasAsignadas').html(Respuesta);
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -1016,59 +1023,62 @@ var TablaChatAsignadoAgente = function () {
         type: "POST",
         url: "?controller=TablaChatAsignadoAgente",
         success: function (Respuesta) {
-            let json = JSON.parse(Respuesta);
-            //console.log();
-            let tabla = '';
-            json.forEach(
-                Datos => {
-                    if (Datos.ChatPendiente != '0' && Datos.ChatAbiertos == '0') {
-                        tabla += `
-                        <tr>
-                            <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                            <td>${Datos.nombre}</td>
-                            <td>${Datos.apellido}</td>
-                            <td>${Datos.usuario}</td>
-                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                            <td><span>${Datos.ChatAbiertos}</span></td>
-                        </tr>
-                    `
-                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente == '0') {
-                        tabla += `
+            if (Respuesta != "") {
+                
+                let json = JSON.parse(Respuesta);
+                //console.log();
+                let tabla = '';
+                json.forEach(
+                    Datos => {
+                        if (Datos.ChatPendiente != '0' && Datos.ChatAbiertos == '0') {
+                            tabla += `
+                            <tr>
+                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
+                                <td>${Datos.nombre}</td>
+                                <td>${Datos.apellido}</td>
+                                <td>${Datos.usuario}</td>
+                                <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
+                                <td><span>${Datos.ChatAbiertos}</span></td>
+                            </tr>
+                        `
+                        } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente == '0') {
+                            tabla += `
+                            <tr>
+                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
+                                <td>${Datos.nombre}</td>
+                                <td>${Datos.apellido}</td>
+                                <td>${Datos.usuario}</td>
+                                <td><span>${Datos.ChatPendiente}</span></td>
+                                <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
+                            </tr>
+                        `
+                        } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente != '0') {
+                            tabla += `
+                            <tr>
+                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
+                                <td>${Datos.nombre}</td>
+                                <td>${Datos.apellido}</td>
+                                <td>${Datos.usuario}</td>
+                                <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
+                                <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
+                            </tr>
+                        `
+                        } else if (Datos.ChatAbiertos == '0' && Datos.ChatPendiente == '0') {
+                            tabla += `
                         <tr>
                             <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
                             <td>${Datos.nombre}</td>
                             <td>${Datos.apellido}</td>
                             <td>${Datos.usuario}</td>
                             <td><span>${Datos.ChatPendiente}</span></td>
-                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
+                            <td><span>${Datos.ChatAbiertos}</span></td>
                         </tr>
                     `
-                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente != '0') {
-                        tabla += `
-                        <tr>
-                            <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                            <td>${Datos.nombre}</td>
-                            <td>${Datos.apellido}</td>
-                            <td>${Datos.usuario}</td>
-                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
-                        </tr>
-                    `
-                    } else if (Datos.ChatAbiertos == '0' && Datos.ChatPendiente == '0') {
-                        tabla += `
-                    <tr>
-                        <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                        <td>${Datos.nombre}</td>
-                        <td>${Datos.apellido}</td>
-                        <td>${Datos.usuario}</td>
-                        <td><span>${Datos.ChatPendiente}</span></td>
-                        <td><span>${Datos.ChatAbiertos}</span></td>
-                    </tr>
-                `
+                        }
                     }
-                }
-            );
-            $('#ChatAsignadosAgentes').html(tabla);
+                );
+                $('#ChatAsignadosAgentes').html(tabla);
+            }
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -1303,7 +1313,14 @@ var MostrarMensajesDespedida = function () {
                                 <td>${Datos.cuerpo}</td>
                                 <td>${Datos.fecha}</td>
                                 <td>${Datos.usuario}</td>
-                                <td><input type="checkbox" name="EliminarMensajeDespedida[]" class="form-check-input" value="${Datos.id}"></td>
+                                <td>
+                                <span class="btn btn-danger btn-sm">
+                                    <span class="fas fa-trash-alt" value="${Datos.id}"></span>
+                                </span>
+                                <span class="btn btn-success btn-sm">
+                                 <span <i class="fas fa-edit"></i>
+                                 </span>
+                                </td>
                             </tr>
                             `
                     }
