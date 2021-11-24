@@ -565,17 +565,11 @@ class controller
     {
         $user = $_SESSION['Master'];
         $Consulta = crud::Read(query::ReadAwebT($user));
-        $i = 0;
-        $Array = array();
         while ($rows = mysqli_fetch_assoc($Consulta)) {
 
-            $Array[$i]['idToken'] = $rows['idToken'];
-            $Array[$i]['Instance'] = $rows['Instance'];
-            $Array[$i]['Token'] = $rows['Token'];
-            $i++;
+            $ArrayToken["Tokendata"][] = $rows;
         }
-        $json = json_encode($Array, JSON_PRETTY_PRINT);
-        print $json;
+        echo json_encode($ArrayToken, JSON_PRETTY_PRINT);
     }
     //////////////////////////////////////////
 

@@ -345,7 +345,7 @@ var MostrarModalTablaChatCerrados = function () {
     });
     $.ajax({
         type: "POST",
-        url: "?controller=MostrarTablaChatCerrados",
+        url: " ",
         success: function (Respuesta) {
             //console.log(Respuesta);
             var json = JSON.parse(Respuesta);
@@ -509,7 +509,7 @@ var Tooltip = function () {
         });
     }
 
-    var cardAbiertos = document.getElementById('cardAbiertos')
+    var cardAbiertos = document.getElementById('SalasAbiertas')
     if (cardAbiertos != null) {
         var tooltip = new bootstrap.Tooltip(cardAbiertos, {
             boundary: document.body, // or document.querySelector('#boundary')
@@ -518,7 +518,7 @@ var Tooltip = function () {
     }
 
 
-    var cardCerrados = document.getElementById('cardCerrados')
+    var cardCerrados = document.getElementById('SalasCerradas')
     if (cardCerrados != null) {
         var tooltip = new bootstrap.Tooltip(cardCerrados, {
             boundary: document.body, // or document.querySelector('#boundary')
@@ -526,7 +526,7 @@ var Tooltip = function () {
         });
     }
 
-    var cardAsignados = document.getElementById('cardAsignados')
+    var cardAsignados = document.getElementById('SalasAsignadas')
     if (cardAsignados != null) {
         var tooltip = new bootstrap.Tooltip(cardAsignados, {
             boundary: document.body, // or document.querySelector('#boundary')
@@ -752,36 +752,16 @@ var CambiarContrasena = function () {
 
 //Read AccesWebToken
 var ReadAccesWebToken = function () {
-    $.ajax({
-        type: "GET",
-        url: "?controller=ReadAccesWebToken",
-        success: function (Respuesta) {
-            let json = JSON.parse(Respuesta);
-            let tbody = '';
-            json.forEach(
-                Consulta => {
-                    tbody += `
-                        <tr>
-                            <td>
-                            <span class="btn btn-danger btn-sm">
-                                <span class="fas fa-trash-alt" value="0"></span>
-                            </span>
-                            <span class="btn btn-success btn-sm">
-                             <span <i class="fas fa-edit"></i>
-                             </span>
-                            </td>
-                            <td>${Consulta.Instance}</td>
-                            <td>${Consulta.Token}</td>
-                        </tr>
-                        `
-                });
-            $('#TablaTokenChatApi').html(tbody);
+    var table = $('#TablaTokenChatApi').DataTable({
+        "ajax": {
+            "method": "POST",
+            "url": "?controller=ReadAccesWebToken"
         },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-            console.log(status);
-            console.log(error);
-        }
+        "columns": [
+            { "Tokendata": "Instance" },
+            { "Tokendata": "Token" },
+            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+        ]
     });
 }
 
@@ -1003,7 +983,22 @@ var MostrarCantidadSalasChatAsignadas = function () {
 
 //Mostrando tabla del dashboard
 var TablaChatAsignadoAgente = function () {
-    $.ajax({
+    var table = $('#TableDasboard').DataTable({
+        "ajax": {
+            "method": "POST",
+            "url": "?controller=TablaChatAsignadoAgente"
+        },
+        "columns": [
+            { "Tokendata": "nombre" },
+            { "Tokendata": "Token" },
+            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+        ]
+    });
+  
+  
+  
+  
+    /*   $.ajax({
         type: "POST",
         url: "?controller=TablaChatAsignadoAgente",
         success: function (Respuesta) {
@@ -1066,7 +1061,7 @@ var TablaChatAsignadoAgente = function () {
             console.log(status);
             console.log(error);
         }
-    });
+    }); */
 }
 ///////////////////////////////////////////
 ///////////////////////////////////////////
