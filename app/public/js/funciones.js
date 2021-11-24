@@ -2,12 +2,6 @@ $(document).ready(function () {
     console.log('Hola desde jquery');
 
     //$.ajaxSetup({ "cache": false });//Manejo de cache de Jquery
-    $('#codigopais').select2({
-        theme: "bootstrap-5",
-        tags: true
-        
-
-    });//llamando al componente select de la libreria select2 de jquery
 
 
     EnviarMensajesChat();
@@ -31,6 +25,15 @@ $(document).ready(function () {
     MostrarModalTablaChatCerrados();
     MostrarModalTablaChatAsignados();
     FiltrandoSalaNav();
+});
+$(document).ready(function () {
+    $('#codigopais').select2({
+        theme: "bootstrap-5",
+
+
+
+    });//llamando al componente select de la libreria select2 de jquery
+
 });
 
 //AQUI ENCONTRARAS TODOS LOS SETINTERVAL
@@ -498,9 +501,9 @@ var MostrarModalTablaChatAsignados = function () {
 var Tooltip = function () {
 
     //ToolTips de las Cards del Dashboard
-    var cardTotal = document.getElementById('cardTotal')
-    if (cardTotal != null) {
-        var tooltip = new bootstrap.Tooltip(cardTotal, {
+    var TotalSalas = document.getElementById('TotalSalas')
+    if (TotalSalas != null) {
+        var tooltip = new bootstrap.Tooltip(TotalSalas, {
             boundary: document.body, // or document.querySelector('#boundary')
             template: '<div class="tooltip TooltipColorVerde" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
         });
@@ -585,34 +588,25 @@ var FiltrandoSalaNav = function () {
                 } else {
                     var tbody = '';
                     $.each(json, function (i, consulta) {
+                        var urlImage = '';
+                        if (consulta.image !== 'null') {
+                            urlImage = consulta.image;
+                        } else {
+                            urlImage = 'https://img.icons8.com/office/100/000000/box-important--v3.gif';
+                        }
+                        console.log(urlImage);
                         tbody += `
-                    <form action="?controller=AbrirSalaChat" method="post">
-                    <div class="d-grid">
-                        <button type="submit" name="btnAbrirChat" value="${consulta.id}" class="btn btn-outline-success m-0 p-0 rounded-1" target="__blank">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                                        <img src="${consulta.image}" class="img-thumbnail rounded float-start" width="40px">
-                                    </div>
-                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6">
-                                    ${consulta.name}
-                                    </div>
-                                    <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                                        <div class="dropdown">
-                                            <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-cog fa-1x"></i>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="index.php?controller=TransferirChat&Id=${consulta.id}">Transferir</a></li>
-                                                <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                        <a href="#" class="list-group-item list-group-item-action border-0">
+                        <div class="badge bg-success float-right">5</div>
+                        <div class="d-flex align-items-start">
+                            <img src="${urlImage}" class="rounded-circle mr-1" alt="" width="40" height="40">
+                        
+                            <div class="flex-grow-1 ml-3">
+                            ${consulta.name}
+                                <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
                             </div>
-                        </button>
-                    </div>
-                </form>
+                        </div>
+                    </a>
                                 `;
                     });
                     $('#tbodySala').html(tbody);
@@ -641,33 +635,16 @@ var FiltrandoSalaNav = function () {
                 //console.log(json);
                 $.each(json.dialogs, function (i, consulta) {
                     tbody += `
-                <form action="?controller=AbrirSalaChat" method="post">
-                <div class="d-grid">
-                    <button type="submit" name="btnAbrirChat" value="${consulta.id}" class="btn btn-outline-success rounded-1" target="__blank">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                                    <img src="${consulta.image}" class="img-thumbnail rounded float-start" width="40px">
-                                </div>
-                                <div class="col-6 col-md-6 col-lg-6 col-xl-6">
-                                ${consulta.name}
-                                </div>
-                                <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-cog fa-1x"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="index.php?controller=TransferirChat&Id=${consulta.id}">Transferir</a></li>
-                                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                    <a href="#" class="list-group-item list-group-item-action border-0">
+                    <div class="badge bg-success float-right">5</div>
+                    <div class="d-flex align-items-start">
+                        <img src="${consulta.image}" class="rounded-circle mr-1" alt="" width="40" height="40">
+                        <div class="flex-grow-1 ml-3">
+                        ${consulta.name}
+                            <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
                         </div>
-                    </button>
-                </div>
-            </form>
+                    </div>
+                </a>
                             `;
 
                 });
@@ -711,9 +688,10 @@ var ReadAgentes = function () {
             { "data": "nombre" },
             { "data": "apellido" },
             { "data": "password" },
-            { "data": "admin" }
+            { "data": "admin" },
+            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
 
-            
+
         ]
     });
 }
@@ -784,7 +762,14 @@ var ReadAccesWebToken = function () {
                 Consulta => {
                     tbody += `
                         <tr>
-                            <td>${Consulta.idToken}</td>
+                            <td>
+                            <span class="btn btn-danger btn-sm">
+                                <span class="fas fa-trash-alt" value="0"></span>
+                            </span>
+                            <span class="btn btn-success btn-sm">
+                             <span <i class="fas fa-edit"></i>
+                             </span>
+                            </td>
                             <td>${Consulta.Instance}</td>
                             <td>${Consulta.Token}</td>
                         </tr>
@@ -933,7 +918,7 @@ var DatatableDialogAgente = function () {
     var table = $('#TablaTransferirChat').DataTable({
         "ajax": {
             "method": "POST",
-            "url": "MostrarDialogsAsignadosChat"
+            "url": "?controller=MostrarDialogsAsignadosChat"
         },
         "columns": [
             { "data": "id" },
@@ -1016,69 +1001,65 @@ var MostrarCantidadSalasChatAsignadas = function () {
     });
 }
 
-
 //Mostrando tabla del dashboard
 var TablaChatAsignadoAgente = function () {
     $.ajax({
         type: "POST",
         url: "?controller=TablaChatAsignadoAgente",
         success: function (Respuesta) {
-            if (Respuesta != "") {
-                
-                let json = JSON.parse(Respuesta);
-                //console.log();
-                let tabla = '';
-                json.forEach(
-                    Datos => {
-                        if (Datos.ChatPendiente != '0' && Datos.ChatAbiertos == '0') {
-                            tabla += `
-                            <tr>
-                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                                <td>${Datos.nombre}</td>
-                                <td>${Datos.apellido}</td>
-                                <td>${Datos.usuario}</td>
-                                <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                                <td><span>${Datos.ChatAbiertos}</span></td>
-                            </tr>
-                        `
-                        } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente == '0') {
-                            tabla += `
-                            <tr>
-                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                                <td>${Datos.nombre}</td>
-                                <td>${Datos.apellido}</td>
-                                <td>${Datos.usuario}</td>
-                                <td><span>${Datos.ChatPendiente}</span></td>
-                                <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
-                            </tr>
-                        `
-                        } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente != '0') {
-                            tabla += `
-                            <tr>
-                                <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
-                                <td>${Datos.nombre}</td>
-                                <td>${Datos.apellido}</td>
-                                <td>${Datos.usuario}</td>
-                                <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                                <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
-                            </tr>
-                        `
-                        } else if (Datos.ChatAbiertos == '0' && Datos.ChatPendiente == '0') {
-                            tabla += `
+            let json = JSON.parse(Respuesta);
+            //console.log();
+            let tabla = '';
+            json.forEach(
+                Datos => {
+                    if (Datos.ChatPendiente != '0' && Datos.ChatAbiertos == '0') {
+                        tabla += `
                         <tr>
-                            <td><input class="form-check-input" name="idAgente[]" type="checkbox" value="${Datos.id}"></td>
+                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
+                            <td>${Datos.nombre}</td>
+                            <td>${Datos.apellido}</td>
+                            <td>${Datos.usuario}</td>
+                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
+                            <td><span>${Datos.ChatAbiertos}</span></td>
+                        </tr>
+                    `
+                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente == '0') {
+                        tabla += `
+                        <tr>
+                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
                             <td>${Datos.nombre}</td>
                             <td>${Datos.apellido}</td>
                             <td>${Datos.usuario}</td>
                             <td><span>${Datos.ChatPendiente}</span></td>
-                            <td><span>${Datos.ChatAbiertos}</span></td>
+                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
                         </tr>
                     `
-                        }
+                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente != '0') {
+                        tabla += `
+                        <tr>
+                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
+                            <td>${Datos.nombre}</td>
+                            <td>${Datos.apellido}</td>
+                            <td>${Datos.usuario}</td>
+                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
+                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
+                        </tr>
+                    `
+                    } else if (Datos.ChatAbiertos == '0' && Datos.ChatPendiente == '0') {
+                        tabla += `
+                    <tr>
+                        <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
+                        <td>${Datos.nombre}</td>
+                        <td>${Datos.apellido}</td>
+                        <td>${Datos.usuario}</td>
+                        <td><span>${Datos.ChatPendiente}</span></td>
+                        <td><span>${Datos.ChatAbiertos}</span></td>
+                    </tr>
+                `
                     }
-                );
-                $('#ChatAsignadosAgentes').html(tabla);
-            }
+                }
+            );
+            $('#ChatAsignadosAgentes').html(tabla);
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -1087,6 +1068,7 @@ var TablaChatAsignadoAgente = function () {
         }
     });
 }
+///////////////////////////////////////////
 ///////////////////////////////////////////
 
 

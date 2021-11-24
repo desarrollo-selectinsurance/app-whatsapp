@@ -156,6 +156,13 @@ class controller
         require_once 'app/master/views/preferencias/preferences.phtml';
         lower();
     }
+    public static function Settings()
+    {
+        higher();
+
+        require_once 'app/master/views/settings/settings.phtml';
+        lower();
+    }
 
     public static function Profile()
     {
@@ -309,8 +316,8 @@ class controller
             //Condicion para Agregar nuevo chat o no
             if (!empty($_POST['NumeroCliente'])) {
                 $user = $_SESSION['Master'];
-                $id = $_POST['CodigoPais'] . $_POST['NumeroCliente'] . '@c.us';
-                $SalaChat = $_POST['CodigoPais'] . $_POST['NumeroCliente'];
+                $id = $_POST['codigopais'] . $_POST['NumeroCliente'] . '@c.us';
+                $SalaChat = $_POST['codigopais'] . $_POST['NumeroCliente'];
             } else {
                 $user = $_SESSION['Master'];
                 $id = $_POST['btnAbrirChat'];
@@ -793,35 +800,32 @@ class controller
     }
 
 
+
     //Tabla para mostrar cantidad de chat asignados a cada agente
     public static function TablaChatAsignadoAgente()
     {
         $consulta = crud::Read(query::ReadChatAsignadosAgentes());
 
         $i = 0;
-        if ($consulta === 1) {
-            $ArrayAgentes = array();
-            while ($row = mysqli_fetch_assoc($consulta)) {
+        while ($row = mysqli_fetch_assoc($consulta)) {
 
-                //Consultando Agente
-                $ArrayAgentes[$i]['id'] = $row['id'];
-                $ArrayAgentes[$i]['usuario'] = $row['usuario'];
-                $ArrayAgentes[$i]['nombre'] = $row['nombre'];
-                $ArrayAgentes[$i]['apellido'] = $row['apellido'];
-    
-    
-                //Logica para sacar la consulta con la funcion count de mysql
-                $ConteoChat = crud::Read(query::ReadConteoChatPendientes($row['usuario']));
-                $conteo = mysqli_fetch_assoc($ConteoChat);
-                $ArrayAgentes[$i]['ChatAbiertos'] = $conteo['v_cantidadChatAbiertos'];
-                $ArrayAgentes[$i]['ChatPendiente'] = $conteo['v_cantidadChatPendiente'];
-                $i++;
-            }
-            //var_dump($ArrayAgentes);
-            $json = json_encode($ArrayAgentes, JSON_PRETTY_PRINT);
-            print $json;
+            //Consultando Agente
+            $ArrayAgentes[$i]['id'] = $row['id'];
+            $ArrayAgentes[$i]['usuario'] = $row['usuario'];
+            $ArrayAgentes[$i]['nombre'] = $row['nombre'];
+            $ArrayAgentes[$i]['apellido'] = $row['apellido'];
+
+
+            //Logica para sacar la consulta con la funcion count de mysql
+            $ConteoChat = crud::Read(query::ReadConteoChatPendientes($row['usuario']));
+            $conteo = mysqli_fetch_assoc($ConteoChat);
+            $ArrayAgentes[$i]['ChatAbiertos'] = $conteo['v_cantidadChatAbiertos'];
+            $ArrayAgentes[$i]['ChatPendiente'] = $conteo['v_cantidadChatPendiente'];
+            $i++;
         }
-       
+        //var_dump($ArrayAgentes);
+        $json = json_encode($ArrayAgentes, JSON_PRETTY_PRINT);
+        print $json;
     }
     //////////////////////////////////////////
 
@@ -834,7 +838,7 @@ class controller
     {
         if (!empty($_POST['idAgente'])) {
             higher();
-            Nav();
+            
             foreach ($_POST['idAgente'] as $Array) {
                 $idAgente = $Array;
             }
