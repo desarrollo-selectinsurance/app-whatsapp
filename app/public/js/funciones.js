@@ -36,6 +36,7 @@ $(document).ready(function () {
 
 });
 
+
 //AQUI ENCONTRARAS TODOS LOS SETINTERVAL
 var SettIntervals = function () {
 

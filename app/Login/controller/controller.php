@@ -18,7 +18,35 @@ class controller
 
             if ($validacion1) {
                 $_SESSION['Master'] = $user;
-                header('Location:./');
+                echo "<script> 
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Te has logueado con Exito',
+                    text: 'Ingresando al sistema',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                      },
+                      hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                      }
+                    
+                  })
+                    setTimeout(function(){
+                        window.location.href = '?c=Home&a=Home';
+                    }, 3000);
+                </script>";
             } elseif ($validacion2) {
                 $_SESSION['Admin'] = $user;
                 header('Location:./');
@@ -26,9 +54,37 @@ class controller
                 $_SESSION['Asistant'] = $user;
                 header('Location:./');
             } else {
-                
-                echo '<center class="text-danger"><b>Usuario o Contraseña invalido</b></center>';
+
+                //echo '<center class="text-danger"><b>Usuario o Contraseña invalido</b></center>';
+                echo "<script> 
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Verifica los datos introducidos',
+                    text: 'Usuario o Contraseña invalido',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                      },
+                      hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                      }
+                    
+                  })
+                  
+                </script>";
                 echo '</body>';
+                echo '</html>';
             }
         }
         //require_once 'app/Login/views/template/footer.html';
