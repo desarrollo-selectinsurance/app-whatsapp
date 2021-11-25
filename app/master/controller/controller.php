@@ -148,12 +148,12 @@ class controller
     }
 
     //configuracion
-    public static function Preferences()
+    public static function Agentes()
     {
         higher();
         
         $Resultado = crud::Read(query::ReadAgentes());
-        require_once 'app/master/views/preferencias/preferences.phtml';
+        require_once 'app/master/views/Agentes/Agentes.phtml';
         lower();
     }
     public static function Settings()

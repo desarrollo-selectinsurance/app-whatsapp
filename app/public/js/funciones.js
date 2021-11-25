@@ -989,8 +989,11 @@ var TablaChatAsignadoAgente = function () {
             "url": "?controller=TablaChatAsignadoAgente"
         },
         "columns": [
-            { "Tokendata": "nombre" },
+            { "data": "nombre" },
             { "Tokendata": "Token" },
+            { "data": "nombre" },
+            { "Tokendata": "Token" },
+            { "data": "nombre" },
             { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
         ]
     });
@@ -1291,11 +1294,11 @@ var MostrarMensajesDespedida = function () {
                                 <td>${Datos.fecha}</td>
                                 <td>${Datos.usuario}</td>
                                 <td>
-                                <span class="btn btn-danger btn-sm">
-                                    <span class="fas fa-trash-alt" value="${Datos.id}"></span>
-                                </span>
+                                <button type="button" class="btn btn-danger btn-sm" value="${Datos.id}">
+                                    <span class="fas fa-trash-alt"></span>
+                                </button>
                                 <span class="btn btn-success btn-sm">
-                                 <span <i class="fas fa-edit"></i>
+                                 <span <i class="fas fa-edit" value="${Datos.id}"></i>
                                  </span>
                                 </td>
                             </tr>

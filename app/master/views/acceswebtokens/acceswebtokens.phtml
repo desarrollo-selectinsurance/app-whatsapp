@@ -19,11 +19,11 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h3 class="m-0 font-weight-bold text-primary">Tokens del sistema<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#user-update" type="button"><i class="fas fa-pencil-alt" aria-hidden="true"></i></button></h3>
+                            <h3 class="m-0 font-weight-bold text-primary">Tokens del sistema<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#Add-access-tokens" type="button"><i class="fas fa-plus-square" aria-hidden="true"></i></button></h3>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered"  width="100%" cellspacing="0"id="TablaTokenChatApi">
+                                <table class="table table-bordered" width="100%" cellspacing="0" id="TablaTokenChatApi">
                                     <thead>
                                         <tr>
                                             <th>Instancia</th>
@@ -39,7 +39,47 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Modal Formulario Acces Token-->
+                    <div class="modal fade" id="Add-access-tokens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #F7A83B; color: white">
+                                    <h2 class="modal-title" id="exampleModalLongTitle">Agregar Tokens <i class="fab fa-keycdn"></i></h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <section>
+                                    <div>
+                                        <!--Formulario-->
+                                        <form class="row g-3 needs-validation col" id="frmAccesWebToken">
+                                            <div class="col-12 col-md-6">
+                                                <label for="instancia">Instancia</label>.
+                                                <input type="text" name="instancia" id="instancia" class="form-control" placeholder="ejemplo: https://api.chat-api.com/instance123" required="">
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label for="token">Token</label>
+                                                <input type="text" name="token" id="token" class="form-control" placeholder="ejemplo: by711a23eioudz1m0" required="">
+                                            </div>
 
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" name="btnIngresoAccesWebToken" class="btn btn-info" id="btnIngresoAccesWebToken"><i class="fas fa-plus-circle"></i> Agregar</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                </section>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 

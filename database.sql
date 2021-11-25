@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS Whatsapp;
 
 CREATE DATABASE IF NOT EXISTS Whatsapp;
+CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 USE Whatsapp;
 
@@ -9,7 +10,7 @@ CREATE TABLE Usuarios(
   password VARCHAR(50) NOT NULL,
   admin BOOLEAN NOT NULL,
   maestro BOOLEAN NOT NULL
-);
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE Agentes(
   id INT(50) PRIMARY KEY AUTO_INCREMENT,
@@ -23,19 +24,19 @@ CREATE TABLE Agentes(
   usuario VARCHAR(50) NOT NULL,
   INDEX(usuario),
   FOREIGN KEY Agentes(usuario) REFERENCES Usuarios(usuario)
-);
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE TokenChatApi(
   idToken INT PRIMARY KEY AUTO_INCREMENT,
   Instance VARCHAR(100) NOT NULL,
   Token VARCHAR(100) NOT NULL,
   user VARCHAR(55) NOT NULL
-);
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE dialogs(
   id VARCHAR(25) PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  image TEXT DEFAULT 'https://raw.githubusercontent.com/selectinsurance/appwhatsapp/Cristian/db/database.sql',
+  image TEXT NOT NULL,
   last_time VARCHAR(25) NOT NULL,
   abierto BOOLEAN DEFAULT FALSE,
   seguimiento BOOLEAN DEFAULT FALSE,
@@ -43,7 +44,7 @@ CREATE TABLE dialogs(
   idAgentes INT(50) NULL,
   INDEX(idAgentes),
   FOREIGN KEY dialogs(idAgentes) REFERENCES Agentes(id)
-);
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE messages(
   id VARCHAR(255) PRIMARY KEY,
@@ -65,14 +66,14 @@ CREATE TABLE messages(
   chatName VARCHAR(255) NULL,
   FechaHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   sender VARCHAR(255) NULL
-)ENGINE=InnoDB;
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ENGINE=InnoDB;
 
 CREATE TABLE MensajeDespedida(
   id INT AUTO_INCREMENT PRIMARY KEY,
   cuerpo VARCHAR(255) NOT NULL,
   usuario VARCHAR(55) NOT NULL,
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 
