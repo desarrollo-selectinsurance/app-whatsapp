@@ -599,7 +599,7 @@ var FiltrandoSalaNav = function () {
                         tbody += `
                         <a href="#" class="list-group-item list-group-item-action border-0">
                         <div class="badge bg-success float-right">5</div>
-                        <div class="d-flex align-items-start">
+                        <div class="d-flex align-items-start ScrollMinimo">
                             <img src="${urlImage}" class="rounded-circle mr-1" alt="" width="40" height="40">
                         
                             <div class="flex-grow-1 ml-3">
@@ -991,9 +991,9 @@ var TablaChatAsignadoAgente = function () {
         },
         "columns": [
             { "data": "nombre" },
-            { "Tokendata": "Token" },
-            { "data": "nombre" },
-            { "Tokendata": "Token" },
+            { "data": "apellido" },
+            { "data": "usuario" },
+            { "data": "Token" },
             { "data": "nombre" },
             { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
         ]
@@ -1576,3 +1576,4 @@ var SearchDialogs = function () {
             ]
         }); */
 //}
+
