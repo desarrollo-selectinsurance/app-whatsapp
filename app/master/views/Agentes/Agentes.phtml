@@ -19,17 +19,20 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Agentes <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#Add-agentes" type="button"><i class="fas fa-plus-square" aria-hidden="true"></i></button></h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Usuarios - Agentes <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#Add-agentes" type="button"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button></h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0" id="TablaAgentes">
+                                <table class="table table-bordered"  id="TablaAgentes">
                                     <thead>
                                         <tr>
                                             <th>Usuario</th>
                                             <th>Nombre</th>
                                             <th>Apellido</th>
                                             <th>Password</th>
+                                            <th>Documento</th>
+                                            <th>Telefono</th>
+                                            <th>Correo</th>
                                             <th>Admin</th>
                                             <th>Accion</th>
                                         </tr>
@@ -64,8 +67,8 @@
 
                                             <div class="form-group col-md-6">
 
-                                                <label for="txtIdentificacion">Documento</label>
-                                                <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" placeholder="ejemplo: @user" required="">
+                                                <label for="documento">Documento</label>
+                                                <input type="text" class="form-control" id="documento" name="documento" placeholder="" required="">
 
                                             </div>
 
@@ -98,19 +101,21 @@
                                                 <input type="password" class="form-control" id="txtPassword" name="txtPassword">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="txtPassword">Confirmar contraseña</label>
-                                                <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                                                <label for="repeatpassword">Confirmar contraseña</label>
+                                                <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="txtPassword">Direccion</label>
-                                                <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                                                <input type="text" class="form-control" id="direcciond" name="direccion">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                
+                                            <label for="txtrol">Rol usuario</label>
+                                              <select class="form-control" name="txtrol" id="txtrol" ></select>
                                             </div>
                                         </div>
+
 
 
 

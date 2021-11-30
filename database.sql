@@ -20,6 +20,7 @@ CREATE TABLE Agentes(
   telefono VARCHAR(50) NOT NULL,
   direccion VARCHAR(255) NOT NULL,
   correo VARCHAR(100) NOT NULL,
+  cargo VARCHAR(50) NOT NULL,
   creador VARCHAR(50) NOT NULL,
   usuario VARCHAR(50) NOT NULL,
   INDEX(usuario),

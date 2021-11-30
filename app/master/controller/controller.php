@@ -178,6 +178,13 @@ class controller
         require_once 'app/master/views/salasdechat/salasdechat.phtml';
         lower();
     }
+    public static function UserManager()
+    {
+        higher();
+        $Resultado = crud::Read(query::ReadAgentes());
+        require_once 'app/master/views/usermanager/usermanager.phtml';
+        lower();
+    }
 
     //Json que se muestra en el dataTable para consultar Agente
     public static function Datatable()
@@ -565,11 +572,17 @@ class controller
     {
         $user = $_SESSION['Master'];
         $Consulta = crud::Read(query::ReadAwebT($user));
+        $i = 0;
+        $Array = array();
         while ($rows = mysqli_fetch_assoc($Consulta)) {
 
-            $ArrayToken["Tokendata"][] = $rows;
+            $Array[$i]['idToken'] = $rows['idToken'];
+            $Array[$i]['Instance'] = $rows['Instance'];
+            $Array[$i]['Token'] = $rows['Token'];
+            $i++;
         }
-        echo json_encode($ArrayToken, JSON_PRETTY_PRINT);
+        $json = json_encode($Array, JSON_PRETTY_PRINT);
+        print $json;
     }
     //////////////////////////////////////////
 

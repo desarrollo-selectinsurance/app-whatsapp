@@ -22,7 +22,7 @@ $(document).ready(function () {
     Tooltip();
     SearchDialogs();
     MostrarModalTablaChatAcumulado();
-    MostrarModalTablaChatCerrados();
+    /* MostrarModalTablaChatCerrados(); */
     MostrarModalTablaChatAsignados();
     FiltrandoSalaNav();
 });
@@ -291,7 +291,7 @@ var MostrarModalTablaChatAbierto = function () {
 }
 
 //Funcion para mostrar Tabla en conteo Cerrados chat
-var MostrarModalTablaChatCerrados = function () {
+/* var MostrarModalTablaChatCerrados = function () {
     $('#FiltroTablaCerrados').keyup(function (e) {
         var form = $('#frmFiltrarCerradosSala').serialize();
         $.ajax({
@@ -390,7 +390,7 @@ var MostrarModalTablaChatCerrados = function () {
             console.log(error);
         }
     });
-}
+} */
 
 //Funcion para mostrar Tabla en conteo Asignados chat
 var MostrarModalTablaChatAsignados = function () {
@@ -585,7 +585,11 @@ var FiltrandoSalaNav = function () {
                 //console.log(Respuesta);
                 var json = JSON.parse(Respuesta);
                 if (json.name === 'No existe Token') {
-                    alert(json.name);
+                    Swal.fire(
+                        'The Internet?',
+                        'That thing is still around?',
+                        'question'
+                    )
                 } else {
                     var tbody = '';
                     $.each(json, function (i, consulta) {
@@ -630,7 +634,32 @@ var FiltrandoSalaNav = function () {
             var json = JSON.parse(Respuesta);
 
             if (json.name === 'No existe Token') {
-                alert(json.name);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'warning',
+                    title: json.name,
+                    text: 'Verifica si has agregado tokens en en el sistema',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+
+                })
+
+
             } else {
                 var tbody = '';
                 //console.log(json);
@@ -684,11 +713,15 @@ var ReadAgentes = function () {
             "method": "POST",
             "url": "?controller=Datatable"
         },
+
         "columns": [
             { "data": "usuario" },
             { "data": "nombre" },
             { "data": "apellido" },
             { "data": "password" },
+            { "data": "documento" },
+            { "data": "telefono" },
+            { "data": "correo" },
             { "data": "admin" },
             { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
 
@@ -756,12 +789,14 @@ var ReadAccesWebToken = function () {
     var table = $('#TablaTokenChatApi').DataTable({
         "ajax": {
             "method": "POST",
-            "url": "?controller=ReadAccesWebToken"
+            "url": "?controller=ReadAccesWebToken",
+            "dataSrc": "",
+
         },
         "columns": [
-            { "Tokendata": "Instance" },
-            { "Tokendata": "Token" },
-            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+            { "data": "Instance" },
+            { "data": "Token" },
+            { "defaultContent": "<center><button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button></center>" }
         ]
     });
 }
@@ -897,6 +932,7 @@ var CreateTransferirChat = function () {
 //Cantidad Chat Asignado a Agentes
 var DatatableDialogAgente = function () {
     var table = $('#TablaTransferirChat').DataTable({
+        "destroy":true,
         "ajax": {
             "method": "POST",
             "url": "?controller=MostrarDialogsAsignadosChat"
@@ -985,87 +1021,24 @@ var MostrarCantidadSalasChatAsignadas = function () {
 //Mostrando tabla del dashboard
 var TablaChatAsignadoAgente = function () {
     var table = $('#TableDasboard').DataTable({
+        "destroy": true,
         "ajax": {
             "method": "POST",
-            "url": "?controller=TablaChatAsignadoAgente"
+            "url": "?controller=TablaChatAsignadoAgente",
+            "dataSrc": "",
         },
+
         "columns": [
+            { "defaultContent": "<button type='submit' class='btn btn-success'><i class='fas fa-eye'></i></button>" },
             { "data": "nombre" },
             { "data": "apellido" },
             { "data": "usuario" },
-            { "data": "Token" },
-            { "data": "nombre" },
-            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
-        ]
+            { "data": "ChatAbiertos" },
+            { "data": "ChatPendiente" },
+        ],
+        
     });
-  
-  
-  
-  
-    /*   $.ajax({
-        type: "POST",
-        url: "?controller=TablaChatAsignadoAgente",
-        success: function (Respuesta) {
-            let json = JSON.parse(Respuesta);
-            //console.log();
-            let tabla = '';
-            json.forEach(
-                Datos => {
-                    if (Datos.ChatPendiente != '0' && Datos.ChatAbiertos == '0') {
-                        tabla += `
-                        <tr>
-                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
-                            <td>${Datos.nombre}</td>
-                            <td>${Datos.apellido}</td>
-                            <td>${Datos.usuario}</td>
-                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                            <td><span>${Datos.ChatAbiertos}</span></td>
-                        </tr>
-                    `
-                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente == '0') {
-                        tabla += `
-                        <tr>
-                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
-                            <td>${Datos.nombre}</td>
-                            <td>${Datos.apellido}</td>
-                            <td>${Datos.usuario}</td>
-                            <td><span>${Datos.ChatPendiente}</span></td>
-                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
-                        </tr>
-                    `
-                    } else if (Datos.ChatAbiertos != '0' && Datos.ChatPendiente != '0') {
-                        tabla += `
-                        <tr>
-                            <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
-                            <td>${Datos.nombre}</td>
-                            <td>${Datos.apellido}</td>
-                            <td>${Datos.usuario}</td>
-                            <td><span class="badge bg-danger rounded-pill">${Datos.ChatPendiente}</span></td>
-                            <td><span class="badge bg-warning rounded-pill">${Datos.ChatAbiertos}</span></td>
-                        </tr>
-                    `
-                    } else if (Datos.ChatAbiertos == '0' && Datos.ChatPendiente == '0') {
-                        tabla += `
-                    <tr>
-                        <td><center><button type='button' class='ver btn btn-success'><i class='fas fa-eye'></i></button></center></td>
-                        <td>${Datos.nombre}</td>
-                        <td>${Datos.apellido}</td>
-                        <td>${Datos.usuario}</td>
-                        <td><span>${Datos.ChatPendiente}</span></td>
-                        <td><span>${Datos.ChatAbiertos}</span></td>
-                    </tr>
-                `
-                    }
-                }
-            );
-            $('#ChatAsignadosAgentes').html(tabla);
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-            console.log(status);
-            console.log(error);
-        }
-    }); */
+
 }
 ///////////////////////////////////////////
 ///////////////////////////////////////////
