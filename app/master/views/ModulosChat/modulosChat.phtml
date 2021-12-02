@@ -3,7 +3,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <?php require_once "app/master/views/template/sidebar.html"; ?>
+        <?php require_once "app/master/views/template/sidebar.phtml"; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -11,7 +11,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <?php require_once "app/master/views/template/navbar.html"; ?>
+                <?php require_once "app/master/views/template/navbar.phtml"; ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                                Agrega un numero de Whtasapp para chatear ya!🐱‍🏍.
                                                 </p>
                                                 <button type="button" class="read_more_btn" data-toggle="modal" data-target="#Add-phone-whatsapp">Add+</button>
                                             </div>
@@ -48,7 +48,7 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                                Crea plantillas de mensajes para enviar a tus contactos!📨.
                                                 </p>
                                                 <button type="button" class="read_more_btn" class="read_more_btn" data-toggle="modal" data-target="#Add-messagess-template">Add+</button>
                                             </div>
@@ -66,8 +66,9 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                                    Agrega un web token desde la Api de Whatsapp!🔑.
                                                 </p>
+                                           
                                                 <button type="button" class="read_more_btn" class="read_more_btn" data-toggle="modal" data-target="#Add-access-tokens">Add+</button>
                                             </div>
                                         </div>
@@ -81,7 +82,7 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                                    Configura un chat bot para responder a tus contactos!🤖.
                                                 </p>
                                                 <button type="button" class="read_more_btn">Read More</button>
                                             </div>
@@ -96,7 +97,7 @@
 
                     <div class="modal fade" id="Add-phone-whatsapp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content wrapper border-bottom-info">
                                 <div class="modal-header" style="background-color: rgb(18, 140, 126); color: white">
                                     <h2 class="modal-title" id="exampleModalLongTitle">Agregar Whatsaap <i class="fab fa-whatsapp"></i></h2>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -358,8 +359,8 @@
 
                     <!-- Modal Formulario Acces Token-->
                     <div class="modal fade" id="Add-access-tokens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
+                        <div class="modal-dialog modal-lg " role="document">
+                            <div class="modal-content wrapper border-bottom-warning">
                                 <div class="modal-header" style="background-color: #F7A83B; color: white">
                                     <h2 class="modal-title" id="exampleModalLongTitle">Agregar Tokens <i class="fab fa-keycdn"></i></h2>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -401,7 +402,7 @@
                     <!-- Modal Formulario Plantillas de Mensajes-->
                     <div class="modal body" id="Add-messagess-template" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content wrapper border-bottom-primary">
                                 <div class="modal-header" style="background-color: rgb(0,136, 255); color: white">
                                     <h2 class="modal-title" id="exampleModalLongTitle">Agregar Plantillas de Mensajes <i class="fa fa-sticky-note" aria-hidden="true"></i></h2>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

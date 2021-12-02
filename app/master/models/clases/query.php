@@ -286,5 +286,12 @@ class  query
 
     public static function ReadTableMessages($id){
         return "SELECT * FROM messagess WHERE idChat = '$id'";
+
+    }
+
+    //Seleccionar el nombre atravez del SESSION ID
+
+    public static function ReadName($user){
+        return "SELECT nombre,apellido FROM agentes WHERE usuario = '$user'";
     }
 }

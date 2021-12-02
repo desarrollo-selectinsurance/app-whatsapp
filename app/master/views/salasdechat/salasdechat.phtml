@@ -3,7 +3,7 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
-		<?php require_once "app/master/views/template/sidebar.html"; ?>
+		<?php require_once "app/master/views/template/sidebar.phtml"; ?>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -11,7 +11,7 @@
 			<!-- Main Content -->
 			<div id="content">
 
-				<?php require_once "app/master/views/template/navbar.html"; ?>
+				<?php require_once "app/master/views/template/navbar.phtml"; ?>
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
@@ -24,7 +24,7 @@
 
 										<section>
 
-											<div class="wrapper">
+											<div class="wrapper border-bottom-info">
 												<section class="users">
 													<header>
 														<div class="content">
@@ -33,7 +33,7 @@
 
 
 															<div class="details">
-																<span>MASTER</span>
+																<span id="user-name"></span>
 																<p>Activo</p>
 															</div>
 														</div>
@@ -43,13 +43,13 @@
 														<input type="text" placeholder="Ingrese el nombre para buscar ...">
 														<button><i class="fas fa-search"></i></button>
 													</div>
-													<div class="users-list" id="tbody">
+													<div class="users-list">
 														<center>
-														<div class="spinner-grow text-info" role="status">
-															<span class="visually-hidden"></span>
-														</div>
+															<div class="spinner-grow text-info" role="status">
+																<span class="visually-hidden"></span>
+															</div>
 														</center>
-														
+
 													</div>
 												</section>
 											</div>

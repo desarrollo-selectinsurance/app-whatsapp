@@ -620,6 +620,7 @@ var FiltrandoSalaNav = function () {
                         </div>
                         </div>
                         <div class="status-dot"><i class="fas fa-circle"></i></div>
+                       
                     </a>
                     `;
                     });
@@ -674,7 +675,7 @@ var FiltrandoSalaNav = function () {
                 //console.log(json);
                 $.each(json.dialogs, function (i, consulta) {
                     data += `
-                    <a href="chat.php?user_id=' ${consulta.id}'">
+                    <a href="?controller=AbrirSalaChat?id=${consulta.id}">
                     <div class="content">
                     <img src="${consulta.image}" alt="">
                     <div class="details">
@@ -683,6 +684,8 @@ var FiltrandoSalaNav = function () {
                     </div>
                     </div>
                     <div class="status-dot ' . $offline . '"><i class="fas fa-circle"></i></div>
+                    
+                     
                 </a>
 `;
 
@@ -1534,6 +1537,28 @@ var SearchDialogs = function () {
 }
 
 //////////////////////////////////////
+let SourceName = function () {
+    $.ajax({
+        type: "GET",
+        url: "?controller=SourceName",
+        success: function (Respuesta) {
+            if (Respuesta === '') {
+                console.log('No hay nada');
+            }else{
+               console.log('Hay algo');
+            }
+                
+            
+            
+        },
+        
+        error: function (xhr, status, error) {
+            console.log(xhr);
+            console.log(status);
+            console.log(error);
+        }
+    });
+}
 
 
 

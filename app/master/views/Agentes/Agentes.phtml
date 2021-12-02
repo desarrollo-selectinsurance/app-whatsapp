@@ -3,7 +3,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <?php require_once "app/master/views/template/sidebar.html"; ?>
+        <?php require_once "app/master/views/template/sidebar.phtml"; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -11,13 +11,13 @@
             <!-- Main Content -->
             <div id="content">
 
-                <?php require_once "app/master/views/template/navbar.html"; ?>
+                <?php require_once "app/master/views/template/navbar.phtml"; ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4 wrapper">
+                    <div class="card shadow mb-4 wrapper border-bottom-primary">
                         <div class="card-header py-3 wrapper">
                             <h6 class="m-0 font-weight-bold text-primary">Usuarios - Agentes <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#Add-agentes" type="button"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button></h6>
                         </div>
@@ -49,7 +49,7 @@
                     <!-- modalUsuarios -->
                     <div class="modal fade" id="Add-agentes" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
+                            <div class="modal-content wrapper border-bottom-warning">
                                 <div class="modal-header" style="background-color: #F7A83B; color: white">
                                     <h2 class="modal-title" id="exampleModalLongTitle">Nuevo Usuario <i class="fa fa-user-plus" aria-hidden="true"></i></h2>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

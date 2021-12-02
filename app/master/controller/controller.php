@@ -4,7 +4,9 @@ require_once 'app/master/models/app_autoload.php';
 //Funciones para requerir encabezado, pie de pagina y menu
 function higher()
 {
-    require_once 'app/master/views/template/header.html';
+    $user = $_SESSION['Master'];
+    $resultado = crud::Read(query::ReadName($user));
+    require_once 'app/master/views/template/header.phtml';
 }
 /* function Nav()
 {
@@ -15,7 +17,7 @@ function higher()
 function lower()
 {
     require_once 'app/master/views/assets/contentfooter.phtml';
-    require_once 'app/master/views/template/footer.html';
+    require_once 'app/master/views/template/footer.phtml';
 }
 
 
@@ -75,7 +77,7 @@ class controller
                     $Array[$i]['idAgentes'] = $rows['idAgentes'];
                     $i++;
                 }
-            }else {
+            } else {
                 $Array = [
                     'name' => 'No se encontraron resultados para la busqueda'
                 ];
@@ -123,7 +125,10 @@ class controller
             higher();
             /* Nav(); */
 
+
             require_once 'app/master/views/dashboard/dashboard.phtml';
+
+
             lower();
         } else {
             header('Location:?controller=Login');
@@ -334,8 +339,17 @@ class controller
     //Abrir Sala de chat individual
     public static function AbrirSalaChat()
     {
+        $id = str_replace('@c.us', '', $_GET['Id']);
+        higher();
+
+
+        //chat de usuario
+        require_once 'app/master/views/chat/chat.phtml';
+        lower();
+
         //Condicion para obligar a tener si o si una sala de chat
-        if (!empty($_POST['btnAbrirChat']) || isset($_POST['btnAddSalaChat'])) {
+
+        /* if (!empty($_POST['btnAbrirChat']) || isset($_POST['btnAddSalaChat'])) {
 
             //Condicion para Agregar nuevo chat o no
             if (!empty($_POST['NumeroCliente'])) {
@@ -366,7 +380,7 @@ class controller
             lower();
         } else {
             header('Location:./');
-        }
+        } */
     }
 
     //Mostrar Mensajes de chat individual
@@ -1026,4 +1040,14 @@ class controller
         }
     }
     ///////////////////////////////////////////
+public static function sourcename(){
+    $user = $_SESSION['Master'];
+    $resultado = crud::Read(query::ReadName($user));
+    foreach ($resultado as $row) {
+        $Array = $row['nombre'];
+        $Array = $row['apellido'];
+    }
+    print $Array;
+}
+
 }
