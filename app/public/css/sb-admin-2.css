@@ -322,6 +322,39 @@ legend {
 progress {
   vertical-align: baseline;
 }
+.scroll-minimo{
+  margin: 1px opx;
+  height: 100%;
+  width: 100%;
+  max-width: auto;
+  overflow: auto;
+  box-sizing: border-box;
+}
+.scroll-minimo::-webkit-scrollbar{
+  --webkit-appearance: none;
+}
+.scroll-minimo::-webkit-scrollbar:vertical{
+  width: 10px;
+}
+
+.scroll-minimo::-webkit-scrollbar-button:increment,
+.scroll-minimo::-webkit-scrollbar-button {
+  display: none;
+}
+
+.scroll-minimo::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.scroll-minimo::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+.scroll-minimo::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
 
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {

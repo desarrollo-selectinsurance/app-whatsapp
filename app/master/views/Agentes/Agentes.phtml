@@ -17,8 +17,8 @@
                 <div class="container-fluid">
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                    <div class="card shadow mb-4 wrapper">
+                        <div class="card-header py-3 wrapper">
                             <h6 class="m-0 font-weight-bold text-primary">Usuarios - Agentes <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#Add-agentes" type="button"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button></h6>
                         </div>
                         <div class="card-body">
@@ -26,6 +26,7 @@
                                 <table class="table table-bordered"  id="TablaAgentes">
                                     <thead>
                                         <tr>
+                                            <th>Id</th>
                                             <th>Usuario</th>
                                             <th>Nombre</th>
                                             <th>Apellido</th>
@@ -130,9 +131,9 @@
                     </div>
 
                     <!-- modalViewUser -->
-                    <div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade " id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
-                            <div class="modal-content">
+                            <div class="modal-content wrapper">
                                 <div class="modal-header header-primary">
                                     <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

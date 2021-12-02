@@ -35,7 +35,18 @@ $(document).ready(function () {
     });//llamando al componente select de la libreria select2 de jquery
 
 });
-
+const searchBar = document.querySelector(".search input"),
+    searchIcon = document.querySelector(".search button"),
+    usersList = document.querySelector(".users-list");
+searchIcon.onclick = () => {
+    searchBar.classList.toggle("show");
+    searchIcon.classList.toggle("active");
+    searchBar.focus();
+    if (searchBar.classList.contains("active")) {
+        searchBar.value = "";
+        searchBar.classList.remove("active");
+    }
+}
 
 //AQUI ENCONTRARAS TODOS LOS SETINTERVAL
 var SettIntervals = function () {
@@ -591,7 +602,7 @@ var FiltrandoSalaNav = function () {
                         'question'
                     )
                 } else {
-                    var tbody = '';
+                    let data = '';
                     $.each(json, function (i, consulta) {
                         var urlImage = '';
                         if (consulta.image !== 'null') {
@@ -600,21 +611,19 @@ var FiltrandoSalaNav = function () {
                             urlImage = 'https://img.icons8.com/office/100/000000/box-important--v3.gif';
                         }
                         console.log(urlImage);
-                        tbody += `
-                        <a href="#" class="list-group-item list-group-item-action border-0">
-                        <div class="badge bg-success float-right">5</div>
-                        <div class="d-flex align-items-start ScrollMinimo">
-                            <img src="${urlImage}" class="rounded-circle mr-1" alt="" width="40" height="40">
-                        
-                            <div class="flex-grow-1 ml-3">
-                            ${consulta.name}
-                                <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
-                            </div>
+                        data += ` <a href="chat.php?user_id=${consulta.id}">
+                        <div class="content">
+                        <img src="${consulta.image}" alt="">
+                        <div class="details">
+                            <span>${consulta.name}</span>
+                            
                         </div>
+                        </div>
+                        <div class="status-dot"><i class="fas fa-circle"></i></div>
                     </a>
-                                `;
+                    `;
                     });
-                    $('#tbodySala').html(tbody);
+                    usersList.innerHTML = data;
                 }
             },
             error: function (xhr, status, error) {
@@ -661,24 +670,24 @@ var FiltrandoSalaNav = function () {
 
 
             } else {
-                var tbody = '';
+                let data = '';
                 //console.log(json);
                 $.each(json.dialogs, function (i, consulta) {
-                    tbody += `
-                    <a href="#" class="list-group-item list-group-item-action border-0">
-                    <div class="badge bg-success float-right">5</div>
-                    <div class="d-flex align-items-start">
-                        <img src="${consulta.image}" class="rounded-circle mr-1" alt="" width="40" height="40">
-                        <div class="flex-grow-1 ml-3">
-                        ${consulta.name}
-                            <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
-                        </div>
+                    data += `
+                    <a href="chat.php?user_id=' ${consulta.id}'">
+                    <div class="content">
+                    <img src="${consulta.image}" alt="">
+                    <div class="details">
+                        <span>${consulta.name}</span>
+                        
                     </div>
+                    </div>
+                    <div class="status-dot ' . $offline . '"><i class="fas fa-circle"></i></div>
                 </a>
-                            `;
+`;
 
                 });
-                $('#tbodySala').html(tbody);
+                usersList.innerHTML = data;
             }
         },
         error: function (xhr, status, error) {
@@ -715,6 +724,7 @@ var ReadAgentes = function () {
         },
 
         "columns": [
+            { "data": "id" },
             { "data": "usuario" },
             { "data": "nombre" },
             { "data": "apellido" },
@@ -723,14 +733,46 @@ var ReadAgentes = function () {
             { "data": "telefono" },
             { "data": "correo" },
             { "data": "admin" },
-            { "defaultContent": "<button type='button' class='btn btn-primary'><i class='fas fa-edit'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+            { "defaultContent": "<button type='button' class='btn btn-primary btn-sm btnEditar' id='btnEliminarMensajeDespedida'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnBorrar' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
 
 
         ]
     });
 }
 
+//Borrar
+$(document).on("click", ".btnBorrar", function () {
+    let fila = $(this);
+    id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+    respuesta = Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
+        }
+    })
 
+    if (respuesta) {
+
+        $.ajax({
+            url: "?controller=DeleteAgentes",
+            type: "POST",
+            data: { id: id },
+
+        });
+
+    }
+});
 //Ingresar Agente por ajax en el boton de dicho formulario
 let IngresarAgente = function () {
     $('#btnRegistrarAgente').click(function (e) {
@@ -932,7 +974,7 @@ var CreateTransferirChat = function () {
 //Cantidad Chat Asignado a Agentes
 var DatatableDialogAgente = function () {
     var table = $('#TablaTransferirChat').DataTable({
-        "destroy":true,
+        "destroy": true,
         "ajax": {
             "method": "POST",
             "url": "?controller=MostrarDialogsAsignadosChat"
@@ -1036,7 +1078,7 @@ var TablaChatAsignadoAgente = function () {
             { "data": "ChatAbiertos" },
             { "data": "ChatPendiente" },
         ],
-        
+
     });
 
 }
@@ -1484,6 +1526,11 @@ var SearchDialogs = function () {
             }
         });
     });
+
+
+
+
+
 }
 
 //////////////////////////////////////

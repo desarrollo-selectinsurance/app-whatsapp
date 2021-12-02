@@ -91,7 +91,7 @@ class  query
     //Filtrando dialogs por name
     public static function ReadDialogsByName($name)
     {
-        return "SELECT * FROM dialogs WHERE name LIKE '$name%'";
+        return "SELECT * FROM dialogs WHERE name LIKE '%$name%'";
     }
 
     //Buscando dialogs filtrando por like chat Total
@@ -274,5 +274,17 @@ class  query
     //Filtrar dialogs por agente
     public static function ReadFiltrarSala($datos, $id){
         return "call SP_FiltrarSala('$datos','$id')";
+    }
+
+    //Eliminar Agentes
+
+    public static function DeleteAgentes($id){
+        return "DELETE FROM agentes WHERE id = '$id'";
+    }
+
+    //SELECT ALL for messages
+
+    public static function ReadTableMessages($id){
+        return "SELECT * FROM messagess WHERE idChat = '$id'";
     }
 }

@@ -57,22 +57,28 @@ class controller
                 print json_encode($name);
             }
         } else {
-            $filtrarNav = $_POST['filtrarNav'];
+            $searchTerm = $_POST['searchTerm'];
 
             //Salas de chat almacenadas en base de datos
-            $consulta = crud::Read(query::ReadDialogsByName($filtrarNav));
+            $consulta = crud::Read(query::ReadDialogsByName($searchTerm));
             $i = 0;
             $Array = array();
-            while ($rows = mysqli_fetch_assoc($consulta)) {
-                $Array[$i]['id'] = $rows['id'];
-                $Array[$i]['name'] = $rows['name'];
-                $Array[$i]['image'] = $rows['image'];
-                $Array[$i]['last_time'] = $rows['last_time'];
-                $Array[$i]['abierto'] = $rows['abierto'];
-                $Array[$i]['seguimiento'] = $rows['seguimiento'];
-                $Array[$i]['Asignador'] = $rows['Asignador'];
-                $Array[$i]['idAgentes'] = $rows['idAgentes'];
-                $i++;
+            if (mysqli_num_rows($consulta) > 0) {
+                while ($rows = mysqli_fetch_assoc($consulta)) {
+                    $Array[$i]['id'] = $rows['id'];
+                    $Array[$i]['name'] = $rows['name'];
+                    $Array[$i]['image'] = $rows['image'];
+                    $Array[$i]['last_time'] = $rows['last_time'];
+                    $Array[$i]['abierto'] = $rows['abierto'];
+                    $Array[$i]['seguimiento'] = $rows['seguimiento'];
+                    $Array[$i]['Asignador'] = $rows['Asignador'];
+                    $Array[$i]['idAgentes'] = $rows['idAgentes'];
+                    $i++;
+                }
+            }else {
+                $Array = [
+                    'name' => 'No se encontraron resultados para la busqueda'
+                ];
             }
             print  json_encode($Array, JSON_PRETTY_PRINT);
         }
@@ -151,7 +157,7 @@ class controller
     public static function Agentes()
     {
         higher();
-        
+
         $Resultado = crud::Read(query::ReadAgentes());
         require_once 'app/master/views/Agentes/Agentes.phtml';
         lower();
@@ -159,7 +165,7 @@ class controller
     public static function Settings()
     {
         higher();
-
+        $Resultado = crud::Read(query::ReadAgentes());
         require_once 'app/master/views/settings/settings.phtml';
         lower();
     }
@@ -167,14 +173,14 @@ class controller
     public static function Profile()
     {
         higher();
-        
+
         require_once 'app/master/views/profile/profile.phtml';
         lower();
     }
     public static function SalasDeChat()
     {
         higher();
-        
+
         require_once 'app/master/views/salasdechat/salasdechat.phtml';
         lower();
     }
@@ -282,10 +288,21 @@ class controller
             }
 
             echo 'Agente Registrado Correctamente';
-            
         } else {
             echo 'Las contraseñas no coinciden';
         }
+    }
+
+    //Eliminando Agente
+
+    public static function DeleteAgentes()
+    {
+        $Array = $_POST['btnEliminarAgente'];
+        foreach ($Array as $indice) {
+            $id =  $indice;
+        }
+        crud::Delete(query::DeleteAgentes($id));
+        echo 'Agente Eliminado con Exito';
     }
 
     //Cambiando Contraseña de los Agentes usando Ajax por metodo post
@@ -551,7 +568,7 @@ class controller
     public static function AccesWebToken()
     {
         higher();
-        
+
         require_once 'app/master/views/acceswebtokens/acceswebtokens.phtml';
 
         lower();
@@ -845,7 +862,7 @@ class controller
     {
         if (!empty($_POST['idAgente'])) {
             higher();
-            
+
             foreach ($_POST['idAgente'] as $Array) {
                 $idAgente = $Array;
             }
