@@ -15,8 +15,6 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-
                     <br>
                     <div class="section_our_solution">
                         <div class="row">
@@ -33,7 +31,7 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                Agrega un numero de Whtasapp para chatear ya!🐱‍🏍.
+                                                    Agrega un numero de Whtasapp para chatear ya!🐱‍🏍.
                                                 </p>
                                                 <button type="button" class="read_more_btn" data-toggle="modal" data-target="#Add-phone-whatsapp">Add+</button>
                                             </div>
@@ -48,7 +46,7 @@
                                             </div>
                                             <div class="solu_description">
                                                 <p>
-                                                Crea plantillas de mensajes para enviar a tus contactos!📨.
+                                                    Crea plantillas de mensajes para enviar a tus contactos!📨.
                                                 </p>
                                                 <button type="button" class="read_more_btn" class="read_more_btn" data-toggle="modal" data-target="#Add-messagess-template">Add+</button>
                                             </div>
@@ -68,7 +66,7 @@
                                                 <p>
                                                     Agrega un web token desde la Api de Whatsapp!🔑.
                                                 </p>
-                                           
+
                                                 <button type="button" class="read_more_btn" class="read_more_btn" data-toggle="modal" data-target="#Add-access-tokens">Add+</button>
                                             </div>
                                         </div>
@@ -110,7 +108,7 @@
                                         <form action="?controller=AbrirSalaChat" method="POST" class="row g-3 needs-validation col" id="Formulario">
                                             <div class="col-12 col-md-6">
                                                 <label for="codigopais">Codigo de Pais</label>
-                                                <select name="codigopais" id="codigopais" data-live-search="true" >
+                                                <select name="codigopais" id="codigopais" data-live-search="true">
                                                     <option value=" 93">Afganistán</option>
                                                     <option value="355">Albania</option>
                                                     <option value="213">Argelia</option>
@@ -387,7 +385,7 @@
                                                 <button type="button" name="btnIngresoAccesWebToken" class="btn btn-info" id="btnIngresoAccesWebToken"><i class="fas fa-plus-circle"></i> Agregar</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>
                                             </div>
-                                            
+
                                         </form>
 
                                     </div>
@@ -418,9 +416,22 @@
                                             <div class="col-12 col-md-6">
                                                 <input type="text" class="form-control my-2" value="uno" readonly>
                                                 <textarea name="plantillamensajes" class="form-control my-2" id="plantillamensajes" cols="30" rows="10" placeholder="Agregar una Plantilla de Mensaje"></textarea>
+                                                <table class="table table-hover border">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mensajes</th>
+                                                        <th>Fecha Hora</th>
+                                                        <th>Creador</th>
+                                                        <th>Accion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="plantillasmensajes">
 
+                                                </tbody>
+
+                                            </table>
                                             </div>
-                                            <br>
+                                            
                                             <div class="modal-footer">
                                                 <button type="submit" name="btnAgregar" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>

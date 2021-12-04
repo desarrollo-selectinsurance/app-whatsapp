@@ -23,18 +23,18 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-4">
-                                <form id="formMensajeDespedida">
+                                <form method="POST" id="formPlantillasMensaje">
                                     <div class="col-12 col-md-12">
-                                        <input type="text" class="form-control my-2" value="<?= $usuario ?>" readonly>
-                                        <textarea name="txtMensajeDespedida" class="form-control my-2" id="txtMensajeDespedida" cols="30" rows="10" placeholder="Agregar una Plantilla de Mensaje"></textarea>
-                                        <button id="btnIngresarMensajeDespedida" name="btnIngresarMensajeDespedida" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</button>
-                                        <button id="btnLimpiarMensajeDespedidad" name="btnLimpiar" class="btn btn-danger"> <i class="fas fa-backspace"></i>  Limpiar</button>
+                                        <input type="text" class="form-control my-2" value="@<?= $usuario ?>" readonly>
+                                        <textarea name="txtMensajeDespedida" class="form-control my-2" id="text-area-mensajes" cols="30" rows="10" placeholder="Agregar una Plantilla de Mensaje"></textarea>
+                                        <button type="button" id="btnAgregarMensaje" name="btnIngresarMensajeDespedida" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</button>
+                                        <button type="button" id="btnLimpiar" name="btnLimpiar" class="btn btn-danger"> <i class="fas fa-backspace"></i>  Limpiar</button>
                                     </div>
                                     <br>
                                 </form>
                             </div>
                             <div class="col-12 col-sm-8 table-responsive text-center scroll-minimo" style="overflow:auto; height:300px; width:500px;">
-                                <form id="form_MensajeDespedida">
+                                <form id="FormMensajePlantilla">
                                     <table class="table table-hover border">
                                         <thead>
                                             <tr>
@@ -44,7 +44,7 @@
                                                 <th>Accion</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tablaMostrarMensajeDespedida">
+                                        <tbody id="plantillasmensajes">
 
                                         </tbody>
 

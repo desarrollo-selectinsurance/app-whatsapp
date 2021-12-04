@@ -279,7 +279,7 @@ class  query
     //Eliminar Agentes
 
     public static function DeleteAgentes($id){
-        return "DELETE FROM agentes WHERE id = '$id'";
+        return "DELETE FROM agentes WHERE id = '$id' ";
     }
 
     //SELECT ALL for messages
@@ -293,5 +293,15 @@ class  query
 
     public static function ReadName($user){
         return "SELECT nombre,apellido FROM agentes WHERE usuario = '$user'";
+    }
+
+    //Seleccionar el el usuaio si no existe en la tabla agentes
+    public static function ReadUser($user){
+        return "SELECT usuario FROM agentes WHERE usuario = '$user'";
+    }
+    
+    //Eliminar Acceso Web Token
+    public static function DeleteAwebT($id){
+        return "DELETE FROM TokenChatApi WHERE id = '$id'";
     }
 }

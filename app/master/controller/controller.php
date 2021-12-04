@@ -211,7 +211,7 @@ class controller
     public static function AgregarAgente()
     {
         $creador = $_SESSION['Master'];
-        $user = $_POST['user'];
+        $user = $_POST['usuario'];
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $documento = $_POST['documento'];
@@ -227,13 +227,12 @@ class controller
 
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
-        $correo = $_POST['correo'];
+        $correo = $_POST['email'];
         $password = md5($_POST['password']);
-        $ConfirmacionPassword = md5($_POST['ConfirmacionPassword']);
+        $ConfirmacionPassword = md5($_POST['confirmpassword']);
 
         //Validacion de pass identica
         if ($password === $ConfirmacionPassword) {
-
 
             //Validacion de usuario master o no
             if ($master === TRUE) {
@@ -302,12 +301,10 @@ class controller
 
     public static function DeleteAgentes()
     {
-        $Array = $_POST['btnEliminarAgente'];
-        foreach ($Array as $indice) {
-            $id =  $indice;
-        }
+        $id = $_POST['id'];
         crud::Delete(query::DeleteAgentes($id));
-        echo 'Agente Eliminado con Exito';
+        echo 'El Agente ha sido eliminado';
+        
     }
 
     //Cambiando Contraseña de los Agentes usando Ajax por metodo post
@@ -538,9 +535,9 @@ class controller
         $usuario = $_SESSION['Master'];
         $success = crud::Create(query::CreateMensajeDespedida($cuerpo, $usuario));
         if ($success != null) {
-            echo 'Registro Exitoso';
+            echo 'Mensaje Agregado Exitosamente'; 
         } else {
-            echo 'Error';
+            echo 'Algo salio mal';
         }
     }
 
@@ -595,7 +592,7 @@ class controller
         $instance = trim($_POST['instancia']);
         $token = trim($_POST['token']);
         crud::Read(query::CreateAwebT($instance, $token, $user));
-        echo 'Registro Exitoso';
+        echo 'Token Ingresado Correctamente';
     }
 
     //Mostrando AccesWebToken por ajax en la tabla
@@ -614,6 +611,14 @@ class controller
         }
         $json = json_encode($Array, JSON_PRETTY_PRINT);
         print $json;
+    }
+
+    //Eliminar AccesWebToken por ajax
+    public static function DeleteAccesWebToken()
+    {
+        $id = $_POST['id'];
+        crud::Delete(query::DeleteAwebT($id));
+        echo 'Token Eliminado con Exito';
     }
     //////////////////////////////////////////
 
@@ -1040,14 +1045,14 @@ class controller
         }
     }
     ///////////////////////////////////////////
-public static function sourcename(){
-    $user = $_SESSION['Master'];
-    $resultado = crud::Read(query::ReadName($user));
-    foreach ($resultado as $row) {
-        $Array = $row['nombre'];
-        $Array = $row['apellido'];
+    public static function sourcename()
+    {
+        $user = $_SESSION['Master'];
+        $resultado = crud::Read(query::ReadName($user));
+        foreach ($resultado as $row) {
+            $Array = $row['nombre'];
+            $Array = $row['apellido'];
+        }
+        print $Array;
     }
-    print $Array;
-}
-
 }

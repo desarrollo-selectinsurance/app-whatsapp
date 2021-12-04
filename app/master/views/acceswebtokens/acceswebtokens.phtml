@@ -52,7 +52,7 @@
                                 <section>
                                     <div>
                                         <!--Formulario-->
-                                        <form class="row g-3 needs-validation col" id="frmAccesWebToken">
+                                        <form method="POST" class="row g-3 needs-validation col" id="frmAccesWebToken">
                                             <div class="col-12 col-md-6">
                                                 <label for="instancia">Instancia</label>.
                                                 <input type="text" name="instancia" id="instancia" class="form-control" placeholder="ejemplo: https://api.chat-api.com/instance123" required="">
@@ -61,13 +61,9 @@
                                                 <label for="token">Token</label>
                                                 <input type="text" name="token" id="token" class="form-control" placeholder="ejemplo: by711a23eioudz1m0" required="">
                                             </div>
-
-
-
-
                                             <div class="modal-footer">
                                                 <button type="button" name="btnIngresoAccesWebToken" class="btn btn-info" id="btnIngresoAccesWebToken"><i class="fas fa-plus-circle"></i> Agregar</button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cerrar</button>
                                             </div>
 
                                         </form>

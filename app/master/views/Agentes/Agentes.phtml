@@ -23,18 +23,16 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered"  id="TablaAgentes">
+                                <table class="table table-bordered" id="TablaAgentes">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
                                             <th>Usuario</th>
                                             <th>Nombre</th>
                                             <th>Apellido</th>
-                                            <th>Password</th>
                                             <th>Documento</th>
                                             <th>Telefono</th>
                                             <th>Correo</th>
-                                            <th>Admin</th>
                                             <th>Accion</th>
                                         </tr>
                                     </thead>
@@ -46,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- modalUsuarios -->
+                    <!-- Modal Agregar Usuarios -->
                     <div class="modal fade" id="Add-agentes" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content wrapper border-bottom-warning">
@@ -57,13 +55,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formUsuario" name="formUsuario" class="formHorizontal">
+                                    <form id="formAgregarUsuarios" method="POST" name="formAgregarUsuarios" class="formHorizontal">
                                         <input type="hidden" id="idUsuario" name="idUsuario" value="">
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtIdentificacion">Usuario</label>
-                                                <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" placeholder="ejemplo: @user" required="">
+                                                <label for="usuario">Usuario</label>
+                                                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="ejemplo: @user" required="">
                                             </div>
 
                                             <div class="form-group col-md-6">
@@ -77,51 +75,141 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtNombre">Nombres</label>
-                                                <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control valid validText" id="nombre" name="nombre" required="">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="txtApellido">Apellidos</label>
-                                                <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
+                                                <label for="apellido">Apellidos</label>
+                                                <input type="text" class="form-control valid validText" id="apellido" name="apellido" required="">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtTelefono">Telefono</label>
-                                                <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
+                                                <label for="telefono">Telefono</label>
+                                                <input type="text" class="form-control valid validNumber" id="telefono" name="telefono" required="">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="txtEmail">Email</label>
-                                                <input type="text" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control valid validEmail" id="email" name="email" required="">
                                             </div>
                                         </div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtPassword">Password</label>
-                                                <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" autocomplete="on">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="repeatpassword">Confirmar contraseña</label>
-                                                <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
+                                                <label for="confirmpassword">Confirmar contraseña</label>
+                                                <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" autocomplete="on">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtPassword">Direccion</label>
-                                                <input type="text" class="form-control" id="direcciond" name="direccion">
+                                                <label for="direccion">Direccion</label>
+                                                <input type="text" class="form-control" id="direccion" name="direccion" required>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                            <label for="txtrol">Rol usuario</label>
-                                              <select class="form-control" name="txtrol" id="txtrol" ></select>
+                                            <div class="form-check form-switch col-md-6">
+                                                <label for="rol">Rol usuario</label>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="master" id="master" >
+                                                    <label class="form-check-label" for="master">Master</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="admin" id="admin" data-role="flipswitch" >
+                                                    <label class="form-check-label" for="admin">Admin</label>
+                                                </div>
                                             </div>
                                         </div>
-
-
-
-
                                         <div class="tile-footer">
-                                            <button id="btnActionForm" class="btn btn-success" type="submit"><i class="fa fa-fw fa-lg fa-check-circle" aria-hidden="true"></i><span id="btnText">Guardar</span></button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button id="btnActionForm" class="btn btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle" aria-hidden="true"></i><span id="btnText">Registrar</span></button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-check-circle"></i> Cerrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Editar Usuarios -->
+                    <!-- modalUsuarios -->
+                    <div class="modal fade" id="Edit-agentes" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content wrapper border-bottom-warning">
+                                <div class="modal-header" style="background-color: #35A7FF; color: white">
+                                    <h2 class="modal-title" id="exampleModalLongTitle">Actualizar Usuarios <i class="fas fa-user-edit" aria-hidden="true"></i></h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formAgregarUsuarios" method="POST" name="formAgregarUsuarios" class="formHorizontal">
+                                        <input type="hidden" id="idUsuario" name="idUsuario" value="">
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="usuario">Usuario</label>
+                                                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="ejemplo: @user" required="">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+
+                                                <label for="documento">Documento</label>
+                                                <input type="text" class="form-control" id="documento" name="documento" placeholder="" required="">
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control valid validText" id="nombre" name="nombre" required="">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="apellido">Apellidos</label>
+                                                <input type="text" class="form-control valid validText" id="apellido" name="apellido" required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="telefono">Telefono</label>
+                                                <input type="text" class="form-control valid validNumber" id="telefono" name="telefono" required="">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control valid validEmail" id="email" name="email" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" autocomplete="on">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="confirmpassword">Confirmar contraseña</label>
+                                                <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" autocomplete="on">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="direccion">Direccion</label>
+                                                <input type="text" class="form-control" id="direccion" name="direccion" required>
+                                            </div>
+                                            <div class="form-check form-switch col-md-6">
+                                                <label for="rol">Rol usuario</label>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="master" id="master" >
+                                                    <label class="form-check-label" for="master">Master</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="admin" id="admin" data-role="flipswitch" >
+                                                    <label class="form-check-label" for="admin">Admin</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tile-footer">
+                                            <button id="btnActionForm" class="btn btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle" aria-hidden="true"></i><span id="btnText">Registrar</span></button>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-check-circle"></i> Cerrar</button>
                                         </div>
                                     </form>
@@ -130,60 +218,7 @@
                         </div>
                     </div>
 
-                    <!-- modalViewUser -->
-                    <div class="modal fade " id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content wrapper">
-                                <div class="modal-header header-primary">
-                                    <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td>Identificación:</td>
-                                                <td id="celIdentificacion">654654654</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nombres:</td>
-                                                <td id="celNombre">Jacob</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Apellidos:</td>
-                                                <td id="celApellido">Jacob</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Teléfono:</td>
-                                                <td id="celTelefono">Larry</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email (Usuario):</td>
-                                                <td id="celEmail">Larry</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tipo Usuario:</td>
-                                                <td id="celTipoUsuario">Larry</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Estado:</td>
-                                                <td id="celEstado">Larry</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Fecha registro:</td>
-                                                <td id="celFechaRegistro">Larry</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
 
