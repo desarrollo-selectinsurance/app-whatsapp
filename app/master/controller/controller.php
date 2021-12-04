@@ -196,6 +196,14 @@ class controller
         require_once 'app/master/views/usermanager/usermanager.phtml';
         lower();
     }
+    //Modulo en Construccion
+
+    public static function ModuloEnConstruccion()
+    {
+        higher();
+        require_once 'app/master/views/nuevosmodulos/nuevomodulo.phtml';
+        lower();
+    }
 
     //Json que se muestra en el dataTable para consultar Agente
     public static function Datatable()
