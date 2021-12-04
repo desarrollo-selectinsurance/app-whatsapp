@@ -304,4 +304,16 @@ class  query
     public static function DeleteAwebT($id){
         return "DELETE FROM TokenChatApi WHERE id = '$id'";
     }
+
+    //Crear BackUps
+
+    public static function CreateBackUps($id){
+        return "CALL SP_BackUp('$id')";
+    }
+    
+    //Leer BackUps
+
+    public static function ReadBackUps(){
+        return "SELECT * FROM Backups";
+    }
 }

@@ -6,6 +6,7 @@ $(document).ready(function () {
     TablaChatAsignadoAgente();
     PlantillasMensajes();
     ReadAccesWebToken();
+    TablaBackups();
 
     //Forms Para agregar datos al sitema
     FormIngresarAgente();
@@ -118,6 +119,25 @@ let ReadAccesWebToken = function () {
             { "data": "Instance" },
             { "data": "Token" },
             { "defaultContent": "<center><button type='button' class='btn btn-primary '><i class='fas fa-edit'></i></button>	<button  class='btnEliminarToken btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button></center>" }
+        ]
+    });
+}
+let TablaBackups = function () {
+    let table = $('#TablaBackups').DataTable({
+        "destroy": true,
+        "ajax": {
+            "method": "POST",
+            "url": "?controller=ReadBackups",
+            "dataSrc": "",
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "nombre" },
+            { "data": "tamano" },
+            
+            { "data": "fecha" },
+            { "data": "usuario" },
+            { "defaultContent": "<button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
         ]
     });
 }

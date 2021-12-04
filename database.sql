@@ -76,7 +76,15 @@ CREATE TABLE MensajeDespedida(
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-
+CREATE TABLE backups(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  tamano VARCHAR(255) NOT NULL,
+  usuario VARCHAR(55) NOT NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  usuario VARCHAR(255) NOT NULL,
+  FOREIGN KEY backups(usuario) REFERENCES Usuarios(usuario)
+)CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 

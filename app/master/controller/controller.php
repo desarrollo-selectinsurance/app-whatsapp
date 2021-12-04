@@ -205,6 +205,14 @@ class controller
         lower();
     }
 
+    //Modulo de Respaldo
+    public static function CopiasDeSeguridad()
+    {
+        higher();
+        require_once 'app/master/views/copiadeseguridad/copiadeseguridad.phtml';
+        lower();
+    }
+
     //Json que se muestra en el dataTable para consultar Agente
     public static function Datatable()
     {
@@ -1063,4 +1071,33 @@ class controller
         }
         print $Array;
     }
+
+    //Crear Copias de Seguridad
+
+    public static function CreateBackups()
+    {
+        $id = $_POST['id'];
+        $resultado = crud::Read(query::ReadBackups($id));
+        $i = 0;
+        $Array = array();
+    }
+
+    //Consultar Copias de Seguridad
+    public static function ReadBackups()
+    {
+        $resultado = crud::Read(query::ReadBackups());
+        $i = 0;
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $Array[$i]['id'] = $row['id'];
+            $Array[$i]['nombre'] = $row['nombre'];
+            $Array[$i]['tamano'] = $row['tamano'];
+            $Array[$i]['usuario'] = $row['usuario'];
+            $Array[$i]['fecha'] = $row['fecha'];
+            $i++;
+        }
+        print json_encode($Array, JSON_PRETTY_PRINT);
+    }
+
+
+
 }
