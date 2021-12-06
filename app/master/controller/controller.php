@@ -167,6 +167,15 @@ class controller
         require_once 'app/master/views/Agentes/Agentes.phtml';
         lower();
     }
+    //Roles
+    public static function Roles()
+    {
+        higher();
+
+        //$Resultado = crud::Read(query::ReadRoles());
+        require_once 'app/master/views/Roles/Roles.phtml';
+        lower();
+    }
     public static function Settings()
     {
         higher();

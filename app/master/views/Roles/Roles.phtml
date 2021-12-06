@@ -19,20 +19,19 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4 wrapper border-bottom-info">
                         <div class="card-header py-3 wrapper">
-                            <h6 class="m-0 font-weight-bold text-primary">Copias de Seguridad<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#Add-Backup" type="button" ><i class="fas fa-history" aria-hidden="true"></i> </button></h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Roles del sistema <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#Add-Roles" type="button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo </button></h6>
                         </div>
                         <div class="card-body ">
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0" id="TablaBackups">
+                                <table class="table table-bordered" width="100%" cellspacing="0" id="TablaRoles">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
-                                            <th>Tamaño</th>
-                                            <th>Fecha</th>
-                                            <th>Usuario</th>
-                                            <th>Accion</th>
+                                            <th>Status</th>
+                                            <th>Acciones</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,11 +42,11 @@
                         </div>
                     </div>
                     <!-- Modal Formulario Acces Token-->
-                    <div class="modal fade " id="Add-Backup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal fade " id="Add-Roles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog " role="document">
-                            <div class="modal-content wrapper border-bottom-warning">
-                                <div class="modal-header" style="background-color: #4281A4; color: white">
-                                    <h2 class="modal-title " id="exampleModalLongTitle">Crear Respaldo<i class="fas fa-database"></i></h2>
+                            <div class="modal-content wrapper border-bottom-info">
+                                <div class="modal-header" style="background-color: #023C40; color: white">
+                                    <h2 class="modal-title " id="exampleModalLongTitle">Nuevo Rol <i class="fas fa-key"></i></h2>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -55,17 +54,25 @@
                                 <section>
                                     <div>
                                         <!--Formulario-->
-                                        <form method="POST" class="row g-3 needs-validation col" id="frmAccesWebToken">
+                                        <form method="POST" class="row g-3 needs-validation col" id="FormRol">
                                             <div class="col-12 col-md-12">
                                                 <label for="nombre">Nombre</label>.
-                                                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="ejemplo: respaldo-1" required="">
+                                                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre del rol" required="">
                                             </div>
                                             <div class="col-12 col-md-12">
                                                 <label for="descripcion">Descripccion</label>
-                                                <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="ejemplo: Base de datosdel dia 1" required="">
+                                                <textarea type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del rol" required="" row="2"></textarea>
                                             </div>
+                                            <div class="col-12 col-md-12">
+                                                <label for="listStatus">Estado</label>
+                                                <select class="form-control" id="listStatus" name="listStatus" required="">
+                                                    <option value="1">Activo</option>
+                                                    <option value="2">Inactivo</option>
+                                                </select>
+                                            </div>
+                                            
                                             <div class="modal-footer">
-                                                <button type="button" name="btnIngresoAccesWebToken" class="btn btn-info" id="btnIngresoAccesWebToken"><i class="fas fa-sync"></i> Crear</button>
+                                                <button type="button" name="btnIngresoAccesWebToken" class="btn btn-primary" id="btnIngresoAccesWebToken"><i class="fas fa-plus-circle"></i> Crear</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cerrar</button>
                                             </div>
 

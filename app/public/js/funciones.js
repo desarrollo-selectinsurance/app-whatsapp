@@ -7,6 +7,7 @@ $(document).ready(function () {
     PlantillasMensajes();
     ReadAccesWebToken();
     TablaBackups();
+    TablaRoles();
 
     //Forms Para agregar datos al sitema
     FormIngresarAgente();
@@ -30,6 +31,9 @@ $(document).ready(function () {
 let ReadAgentes = function () {
     let table = $('#TablaAgentes').DataTable({
         "destroy": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
         "ajax": {
             "method": "POST",
             "url": "?controller=Datatable"
@@ -42,8 +46,41 @@ let ReadAgentes = function () {
             { "data": "documento" },
             { "data": "telefono" },
             { "data": "correo" },
-
             { "defaultContent": "<button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+        ],
+        'dom': 'lBfrtip',
+        'buttons': [{
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr": "Copiar",
+            "className": "btn btn-secondary"
+        }, {
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr": "Esportar a Excel",
+            "className": "btn btn-success"
+        }, {
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr": "Esportar a PDF",
+            "className": "btn btn-danger"
+        }, {
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr": "Esportar a CSV",
+            "className": "btn btn-info"
+        }, {
+            "extend": "print",
+            "text": "<i class='fas fa-print'></i> Imprimir",
+            "titleAttr": "Imprimir",
+            "className": "btn btn-warning"
+        }
+        ],
+        "resonsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order": [
+            [0, "desc"]
         ]
     });
 }
@@ -52,6 +89,10 @@ let ReadAgentes = function () {
 
 let TablaChatAsignadoAgente = function () {
     let table = $('#TableDasboard').DataTable({
+        "destroy": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
         "ajax": {
             "method": "POST",
             "url": "?controller=TablaChatAsignadoAgente",
@@ -66,6 +107,40 @@ let TablaChatAsignadoAgente = function () {
             { "data": "ChatAbiertos" },
             { "data": "ChatPendiente" },
         ],
+        'dom': 'lBfrtip',
+        'buttons': [{
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr": "Copiar",
+            "className": "btn btn-secondary"
+        }, {
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr": "Esportar a Excel",
+            "className": "btn btn-success"
+        }, {
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr": "Esportar a PDF",
+            "className": "btn btn-danger"
+        }, {
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr": "Esportar a CSV",
+            "className": "btn btn-info"
+        }, {
+            "extend": "print",
+            "text": "<i class='fas fa-print'></i> Imprimir",
+            "titleAttr": "Imprimir",
+            "className": "btn btn-warning"
+        }
+        ],
+        "resonsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order": [
+            [0, "desc"]
+        ]
 
     });
 
@@ -109,6 +184,9 @@ let PlantillasMensajes = function () {
 let ReadAccesWebToken = function () {
     let table = $('#TablaTokenChatApi').DataTable({
         "destroy": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
         "ajax": {
             "method": "POST",
             "url": "?controller=ReadAccesWebToken",
@@ -119,12 +197,49 @@ let ReadAccesWebToken = function () {
             { "data": "Instance" },
             { "data": "Token" },
             { "defaultContent": "<center><button type='button' class='btn btn-primary '><i class='fas fa-edit'></i></button>	<button  class='btnEliminarToken btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button></center>" }
+        ],
+        'dom': 'lBfrtip',
+        'buttons': [{
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr": "Copiar",
+            "className": "btn btn-secondary"
+        }, {
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr": "Esportar a Excel",
+            "className": "btn btn-success"
+        }, {
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr": "Esportar a PDF",
+            "className": "btn btn-danger"
+        }, {
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr": "Esportar a CSV",
+            "className": "btn btn-info"
+        }, {
+            "extend": "print",
+            "text": "<i class='fas fa-print'></i> Imprimir",
+            "titleAttr": "Imprimir",
+            "className": "btn btn-warning"
+        }
+        ],
+        "resonsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order": [
+            [0, "desc"]
         ]
     });
 }
 let TablaBackups = function () {
     let table = $('#TablaBackups').DataTable({
         "destroy": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
         "ajax": {
             "method": "POST",
             "url": "?controller=ReadBackups",
@@ -134,11 +249,105 @@ let TablaBackups = function () {
             { "data": "id" },
             { "data": "nombre" },
             { "data": "tamano" },
-            
+
             { "data": "fecha" },
             { "data": "usuario" },
             { "defaultContent": "<button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+        ],
+        'dom': 'lBfrtip',
+        'buttons': [{
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr": "Copiar",
+            "className": "btn btn-secondary"
+        }, {
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr": "Esportar a Excel",
+            "className": "btn btn-success"
+        }, {
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr": "Esportar a PDF",
+            "className": "btn btn-danger"
+        }, {
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr": "Esportar a CSV",
+            "className": "btn btn-info"
+        }, {
+            "extend": "print",
+            "text": "<i class='fas fa-print'></i> Imprimir",
+            "titleAttr": "Imprimir",
+            "className": "btn btn-warning"
+        }
+        ],
+        "resonsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order": [
+            [0, "desc"]
         ]
+    });
+}
+
+let TablaRoles = function () {
+    let table = $('#TablaRoles').DataTable({
+        "destroy": true,
+        "processing": true,
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        "order": [
+            [0, "desc"]
+        ],
+        "ajax": {
+            "method": "POST",
+            "url": "?controller=ReadRoles",
+            "dataSrc": "",
+        },
+        "columns": [
+            { "data": "idrol" },
+            { "data": "nombrerol" },
+            { "data": "descripcion" },
+            { "data": "status" },
+            { "defaultContent": "<button type='button' class='btn btn-secondary btn-sm btnEditarRol' id='btnRol' data-togle='modal' data-target='#EditarRol' title='Permisos'><i class='fas fa-key'></i></button> <button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes' title='Editar'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' title='Eliminar' ><i class='fas fa-trash-alt'></i></button>" }
+        ],
+        'dom': 'lBfrtip',
+        'buttons': [{
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr": "Copiar",
+            "className": "btn btn-secondary"
+        }, {
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr": "Esportar a Excel",
+            "className": "btn btn-success"
+        }, {
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr": "Esportar a PDF",
+            "className": "btn btn-danger"
+        }, {
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr": "Esportar a CSV",
+            "className": "btn btn-info"
+        },{
+            "extend": "print",
+            "text": "<i class='fas fa-print'></i> Imprimir",
+            "titleAttr": "Imprimir",
+            "className": "btn btn-warning"
+        }
+    ],
+        "resonsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order": [
+            [0, "desc"]
+        ]
+        
     });
 }
 
