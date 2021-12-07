@@ -21,6 +21,13 @@ $(document).ready(function () {
     EditarAgente();
     EliminarToken();
 
+    //Funcion para Filtrar y mostrar las slas de chat
+    FiltrarSalasChat();
+    MostrarSalasChat();
+
+
+
+
 
 
     //Validacion de contraseñas iguales
@@ -234,6 +241,7 @@ let ReadAccesWebToken = function () {
         ]
     });
 }
+//Read Tabla de BackUps
 let TablaBackups = function () {
     let table = $('#TablaBackups').DataTable({
         "destroy": true,
@@ -252,7 +260,7 @@ let TablaBackups = function () {
 
             { "data": "fecha" },
             { "data": "usuario" },
-            { "defaultContent": "<button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
+            { "defaultContent": "<button type='button' class='btn btn-info btn-sm btnDownloadBackups' id='btnDownloadBackups' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-download'></i></button> <button type='button' class='btn btn-primary btn-sm btnEditarAgente' id='btnEditarAgente' data-togle='modal' data-target='#Edit-Agentes'><i class='fas fa-edit'></i></button>	<button type='button' class=' btn btn-danger btn-sm btnEliminarAgente' data-toggle='modal' data-target='#modalEliminar' ><i class='fas fa-trash-alt'></i></button>" }
         ],
         'dom': 'lBfrtip',
         'buttons': [{
@@ -291,6 +299,7 @@ let TablaBackups = function () {
     });
 }
 
+//Read Tabla de Roles
 let TablaRoles = function () {
     let table = $('#TablaRoles').DataTable({
         "destroy": true,
@@ -334,23 +343,24 @@ let TablaRoles = function () {
             "text": "<i class='fas fa-file-csv'></i> CSV",
             "titleAttr": "Esportar a CSV",
             "className": "btn btn-info"
-        },{
+        }, {
             "extend": "print",
             "text": "<i class='fas fa-print'></i> Imprimir",
             "titleAttr": "Imprimir",
             "className": "btn btn-warning"
         }
-    ],
+        ],
         "resonsieve": "true",
         "bDestroy": true,
         "iDisplayLength": 10,
         "order": [
             [0, "desc"]
         ]
-        
+
     });
 }
 
+//Ingresar Agentes nuevos agentes
 let FormIngresarAgente = function () {
     $('#btnActionForm').click(function (e) {
         e.preventDefault();
@@ -425,7 +435,7 @@ let FormIngresarAgente = function () {
         ReadAgentes();
     });
 }
-
+//agregar tokens
 let AgregarToken = function () {
     $('#btnIngresoAccesWebToken').click(function (e) {
         e.preventDefault();
@@ -463,6 +473,7 @@ let AgregarToken = function () {
     });
 }
 
+//Agregar mensajes - plantillas
 let AgregarPlantillaMensaje = function () {
     $('#btnAgregarMensaje').click(function (e) {
         e.preventDefault();
@@ -530,7 +541,7 @@ let AgregarPlantillaMensaje = function () {
 
     });
 }
-
+//Eliminar Plantillas - Mensajes
 let EliminarPlantillaMensaje = function () {
     /* $('#btnEliminar').click(function (e) {
         e.preventDefault();
@@ -557,13 +568,14 @@ let EliminarPlantillaMensaje = function () {
 
     });
 }
-
+//Editar Plantillas - Mensajes
 let EditarPlantillaMensaje = function () {
     $(document).on('click', '.btnEditar', function (e) {
         e.preventDefault();
         console.log('Editar');
     });
 }
+//Eliminar Agentes
 
 let EliminarAgente = function () {
     $(document).on('click', '.btnEliminarAgente', function (e) {
@@ -615,6 +627,7 @@ let EliminarAgente = function () {
         })
     });
 }
+//Editar Agentes
 let EditarAgente = function () {
     $(document).on('click', '.btnEditarAgente', function (e) {
         e.preventDefault();
@@ -622,7 +635,7 @@ let EditarAgente = function () {
 
     });
 }
-
+//Elinar Tokens
 let EliminarToken = function () {
     $(document).on('click', '.btnEliminarToken', function (e) {
         e.preventDefault();
@@ -676,4 +689,64 @@ let EliminarToken = function () {
 
 
 
+}
+
+let FiltrarSalasChat = function () {
+    const searchBar = document.querySelector(".search input"),
+        searchIcon = document.querySelector(".search button"),
+        usersList = document.querySelector(".users-list");
+
+    searchIcon.onclick = () => {
+        searchBar.classList.toggle("show");
+        searchIcon.classList.toggle("active");
+        searchBar.focus();
+        if (searchBar.classList.contains("active")) {
+            searchBar.value = "";
+            searchBar.classList.remove("active");
+        }
+    }
+
+    searchBar.onkeyup = () => {
+        let searchTerm = searchBar.value;
+        if (searchTerm != "") {
+            searchBar.classList.add("active");
+        } else {
+            searchBar.classList.remove("active");
+        }
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "?controller=FiltrarSalasChat", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    console.log(data);
+                    usersList.innerHTML = data;
+                }
+            }
+        }
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("searchTerm=" + searchTerm);
+    }
+}
+
+let MostrarSalasChat = function () {
+    const searchBar = document.querySelector(".search input"),
+        searchIcon = document.querySelector(".search button"),
+        usersList = document.querySelector(".users-list");
+    setInterval(() =>{
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "?controller=MostrarSalasChat", true);
+        xhr.onload = ()=>{
+          if(xhr.readyState === XMLHttpRequest.DONE){
+              if(xhr.status === 200){
+                let data = xhr.response;
+                if(!searchBar.classList.contains("active")){
+                  usersList.innerHTML = data;
+                }
+              }
+          }
+        }
+        xhr.send();
+      }, 500);
+        
 }

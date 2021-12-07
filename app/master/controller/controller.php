@@ -4,7 +4,7 @@ require_once 'app/master/models/app_autoload.php';
 //Funciones para requerir encabezado, pie de pagina y menu
 function higher()
 {
-    $user = $_SESSION['Master'];
+    $user = $_SESSION['user'];
     $resultado = crud::Read(query::ReadName($user));
     require_once 'app/master/views/template/header.phtml';
 }
@@ -24,11 +24,11 @@ function lower()
 class controller
 {
     //Filtrando Sala desde Nav
-    public static function FiltrandoSalaNav()
+    public static function FiltrarSalasChat()
     {
         $filtrarNav = '';
-        $user = $_SESSION['Master'];
-        if (!isset($_POST['filtrarNav'])) {
+        $user = $_SESSION['user'];
+        if (!isset($_POST['searchTerm'])) {
 
             //Recibiendo Salas de chat abiertas desde la app de whatsapp
             $AwebT = mysqli_fetch_assoc(crud::Read(query::ReadAwebT($user)));
@@ -67,22 +67,23 @@ class controller
             $Array = array();
             if (mysqli_num_rows($consulta) > 0) {
                 while ($rows = mysqli_fetch_assoc($consulta)) {
-                    $Array[$i]['id'] = $rows['id'];
-                    $Array[$i]['name'] = $rows['name'];
-                    $Array[$i]['image'] = $rows['image'];
-                    $Array[$i]['last_time'] = $rows['last_time'];
-                    $Array[$i]['abierto'] = $rows['abierto'];
-                    $Array[$i]['seguimiento'] = $rows['seguimiento'];
-                    $Array[$i]['Asignador'] = $rows['Asignador'];
-                    $Array[$i]['idAgentes'] = $rows['idAgentes'];
-                    $i++;
+                    $Array = '<a href="?controller=AbrirSalaChat?id='. $rows['id'].'">
+                    <div class="content">
+                    <img src="'. $rows['image'].'" alt="">
+                    <div class="details">
+                        <span>'. $rows['name'].'</span>
+                        
+                    </div>
+                    </div>
+                    <div class="status-dot"><i class="fas fa-circle"></i></div>
+                   
+                </a>
+                ';
                 }
             } else {
-                $Array = [
-                    'name' => 'No se encontraron resultados para la busqueda'
-                ];
+               $Array = 'No se encontró ningún resultado relacionado con su término de búsqueda';
             }
-            print  json_encode($Array, JSON_PRETTY_PRINT);
+            echo $Array;
         }
     }
 
@@ -90,12 +91,12 @@ class controller
     //DashBoard
     public static function Inicio()
     {
-        if (isset($_SESSION['Master'])) {
+        if (isset($_SESSION['user'])) {
 
 
             //Logica para cerrar chat
             if (isset($_POST['btnCerrarChatConMensaje'])) {
-                $user = $_SESSION['Master'];
+                $user = $_SESSION['user'];
 
 
                 //Envio de mensaje pregrabado
@@ -121,14 +122,9 @@ class controller
                 $id = $_POST['btnCerrarChat'] . '@c.us';
                 crud::Update(query::UpdateDialogsCerrarChat($id));
             }
-
             higher();
             /* Nav(); */
-
-
             require_once 'app/master/views/dashboard/dashboard.phtml';
-
-
             lower();
         } else {
             header('Location:?controller=Login');
@@ -657,7 +653,7 @@ class controller
     {
         $id = str_replace('@c.us', '', $_GET['Id']);
         higher();
-        Nav();
+        
 
 
         require_once 'app/master/views/TransferenciaChat/TransferenciaChat.phtml';
@@ -709,7 +705,7 @@ class controller
     }
 
     //Mostrar Tabla Dialogs totales
-    public static function MostrarTablaChatAcumulado()
+    public static function MostrarSalasChat()
     {
         $datos = '';
         if (isset($_POST['FiltroTablaTotal'])) {
@@ -721,27 +717,41 @@ class controller
             $i = 0;
             $Array = array();
             while ($row = mysqli_fetch_assoc($consulta)) {
-                $Array[$i]['id'] = $row['id'];
-                $Array[$i]['name'] = $row['name'];
-                $Array[$i]['image'] = $row['image'];
-                $Array[$i]['Asignador'] = $row['Asignador'];
-                $Array[$i]['idAgentes'] = $row['idAgentes'];
-                $i++;
+                $Array = '<a href="?controller=AbrirSalaChat?id='. $row['id'].'">
+                <div class="content">
+                <img src="'. $row['image'].'" alt="">
+                <div class="details">
+                    <span>'. $row['name'].'</span>
+                    
+                </div>
+                </div>
+                <div class="status-dot"><i class="fas fa-circle"></i></div>
+               
+            </a>
+            ';
+            $i++;
             }
         } else if (empty($datos)) {
             $consulta = crud::Read(query::ReadDialogs());
             $i = 0;
             $Array = array();
             while ($row = mysqli_fetch_assoc($consulta)) {
-                $Array[$i]['id'] = $row['id'];
-                $Array[$i]['name'] = $row['name'];
-                $Array[$i]['image'] = $row['image'];
-                $Array[$i]['Asignador'] = $row['Asignador'];
-                $Array[$i]['idAgentes'] = $row['idAgentes'];
-                $i++;
+                $Array = '<a href="?controller=AbrirSalaChat?id='. $row['id'].'">
+                <div class="content">
+                <img src="'. $row['image'].'" alt="">
+                <div class="details">
+                    <span>'. $row['name'].'</span>
+                    
+                </div>
+                </div>
+                <div class="status-dot"><i class="fas fa-circle"></i></div>
+               
+            </a>
+            ';
+            $i++;
             }
         }
-        print json_encode($Array, JSON_PRETTY_PRINT);
+        echo $Array;
     }
 
     //Mostrar Tabla Dialogs Abiertos
@@ -843,7 +853,7 @@ class controller
 
 
             higher();
-            Nav();
+            
             require_once 'app/master/views/chat/chat.phtml';
             lower();
         } else {
@@ -998,11 +1008,11 @@ class controller
     }
 
     //Consultando los datos recibidos por el input de dialogs mostrados en la tabla
-    public static function FiltrarDatosTabla()
+    public static function BuscarChats()
     {
         $valor = '';
         $id = '';
-        if (isset($_POST['SearchDialogs']) && isset($_POST['idAgente'])) {
+        if (isset($_POST['searchTerm']) && isset($_POST['idAgente'])) {
             $valor = $_POST['SearchDialogs'];
             $id = $_POST['idAgente'];
         }

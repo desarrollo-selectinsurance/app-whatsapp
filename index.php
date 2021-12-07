@@ -17,37 +17,6 @@ if (isset($_SESSION['Master'])) {
         header('Location:?controller=Inicio');
     }
 
-
-
-    //Admin
-} elseif (isset($_SESSION['Admin'])) {
-    require_once 'app/admin/controller/controller.php';
-    if (isset($_GET['controller'])) {
-        $controller = $_GET['controller'];
-        switch ($_GET['controller']) {
-            case $controller:
-                controller::$controller();
-                break;
-        }
-    } else {
-        header('Location:?controller=Inicio');
-    }
-
-    //Asistente
-} elseif (isset($_SESSION['Asistant'])) {
-
-    require_once 'app/asistant/controller/controller.php';
-    if (isset($_GET['controller'])) {
-        $controller = $_GET['controller'];
-        switch ($_GET['controller']) {
-            case $controller:
-                controller::$controller();
-                break;
-        }
-    } else {
-        header('Location:?controller=Inicio');
-    }
-
     //Login
 } else {
 

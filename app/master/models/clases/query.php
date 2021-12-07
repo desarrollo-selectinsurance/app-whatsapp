@@ -91,7 +91,7 @@ class  query
     //Filtrando dialogs por name
     public static function ReadDialogsByName($name)
     {
-        return "SELECT * FROM dialogs WHERE name LIKE '%$name%'";
+        return "SELECT * FROM dialogs WHERE name LIKE '$name%'";
     }
 
     //Buscando dialogs filtrando por like chat Total

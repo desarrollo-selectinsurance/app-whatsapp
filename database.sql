@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS Whatsapp;
 
 CREATE DATABASE IF NOT EXISTS Whatsapp;
-CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
 
 USE Whatsapp;
 
@@ -9,7 +9,8 @@ CREATE TABLE Usuarios(
   usuario VARCHAR(50) NOT NULL PRIMARY KEY,
   password VARCHAR(50) NOT NULL,
   admin BOOLEAN NOT NULL,
-  maestro BOOLEAN NOT NULL
+  maestro BOOLEAN NOT NULL,
+  rolid BIGINT(20) NOT NULL
 )CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE Agentes(
@@ -82,11 +83,46 @@ CREATE TABLE backups(
   tamano VARCHAR(255) NOT NULL,
   usuario VARCHAR(55) NOT NULL,
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  usuario VARCHAR(255) NOT NULL,
+  index(usuario),
   FOREIGN KEY backups(usuario) REFERENCES Usuarios(usuario)
 )CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE modulo(
+  idmodulo bigint(20) not null AUTO_INCREMENT,
+  titulo varchar(255) not null,
+  descripcion text not null,
+  status int NOT NULL DEFAULT 1 ,
+  index(idmodulo),
+  FOREIGN KEY modulo(idmodulo) REFERENCES permisos(idmodulo)
+);
 
+CREATE TABLE permisos(
+  idpermiso bigint(20) not null AUTO_INCREMENT,
+  rolid bigint(20) not null,
+ moduloid bigint(20) not null,
+  r int NOT NULL DEFAULT 0,
+  w int NOT NULL DEFAULT 0,
+  u int NOT NULL DEFAULT 0,
+  d int NOT NULL DEFAULT 0,
+  PRIMARY KEY (idpermiso),
+  index(rolid),
+  index(moduloid),
+  FOREIGN KEY permisos(rolid) REFERENCES roles(idrol),
+  FOREIGN KEY permisos(moduloid) REFERENCES modulo(idmodulo)
+  
+);
+
+CREATE TABLE rol(
+  idrol bigint(20) not null AUTO_INCREMENT,
+  nombrerol varchar(255) not null,
+  nombre varchar(255) not null,
+  descripcion text not null,
+  status int NOT NULL DEFAULT 1,
+  PRIMARY KEY (idrol),
+  index(idrol),
+  FOREIGN KEY rol(idrol) REFERENCES usuarios(rolid)
+
+);
 
 
 
@@ -497,107 +533,3 @@ SELECT * FROM TokenChatApi WHERE user = v_creador ORDER BY idToken DESC Limit 1;
 
 END //
 
-
-
-
-
-
-
-INSERT INTO
-  Usuarios(usuario, password, admin, maestro)
-VALUES
-  (
-    'master',
-    '202cb962ac59075b964b07152d234b70',
-    TRUE,
-    TRUE
-  );
-
-INSERT INTO
-  Agentes(
-    nombre,
-    apellido,
-    documento,
-    telefono,
-    direccion,
-    correo,
-    creador,
-    usuario
-  )
-VALUES
-  (
-    'Cristian',
-    'Aguirre Cataño',
-    '1035391050',
-    '3166857000',
-    'carrera 33 47 35',
-    'dextter1913@gmail.com',
-    'master',
-    'master'
-  );
-
-INSERT INTO
-  Usuarios(usuario, password, admin, maestro)
-VALUES
-  (
-    'admin',
-    '202cb962ac59075b964b07152d234b70',
-    TRUE,
-    FALSE
-  );
-
-INSERT INTO
-  Agentes(
-    nombre,
-    apellido,
-    documento,
-    telefono,
-    direccion,
-    correo,
-    creador,
-    usuario
-  )
-VALUES
-  (
-    'Carlos',
-    'Monsalve Builes',
-    '105874596',
-    '3134558574',
-    'carrera 22 52 35',
-    'carlithos634@gmail.com',
-    'master',
-    'admin'
-  );
-
-INSERT INTO
-  Usuarios(usuario, password, admin, maestro)
-VALUES
-  (
-    'regular',
-    '202cb962ac59075b964b07152d234b70',
-    FALSE,
-    FALSE
-  );
-
-INSERT INTO
-  Agentes(
-    nombre,
-    apellido,
-    documento,
-    telefono,
-    direccion,
-    correo,
-    creador,
-    usuario
-  )
-VALUES
-  (
-    'Maria',
-    'Isabel Beltran',
-    '105896354',
-    '3167459321',
-    'Avenida 7 15 30',
-    'MariaBe1994@gmail.com',
-    'admin',
-    'regular'
-  );
