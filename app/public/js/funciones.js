@@ -21,9 +21,13 @@ $(document).ready(function () {
     EditarAgente();
     EliminarToken();
 
-    //Funcion para Filtrar y mostrar las slas de chat
+    //Funcion para Filtrar y mostrar las salas de chat
     FiltrarSalasChat();
     MostrarSalasChat();
+
+    //Chat Directo
+
+    Chats();
 
 
 
@@ -692,6 +696,7 @@ let EliminarToken = function () {
 }
 
 let FiltrarSalasChat = function () {
+
     const searchBar = document.querySelector(".search input"),
         searchIcon = document.querySelector(".search button"),
         usersList = document.querySelector(".users-list");
@@ -718,35 +723,124 @@ let FiltrarSalasChat = function () {
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    let data = xhr.response;
-                    console.log(data);
-                    usersList.innerHTML = data;
+                    let data = JSON.parse(xhr.response);
+                    //console.log(data);
+                    $.each(data, function (i, item) {
+                        usersList.innerHTML += `<a href="?controller=AbrirSalaChat?id=${item.id}">
+                            <div class="content">
+                            <img src="${item.image}" alt="">
+                            <div class="details">
+                                <span>${item.name}</span>
+                                
+                            </div>
+                            </div>
+                            <div class="status-dot"><i class="fas fa-circle"></i></div>
+
+                        </a>`;
+                    });
                 }
             }
         }
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.send("searchTerm=" + searchTerm);
     }
+
+   let xhr = new XMLHttpRequest();
+    xhr.open("GET", "?controller=MostrarSalasChat", true);
+    xhr.onload = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(xhr.response);
+                if (!searchBar.classList.contains("active")) {
+                    $.each(data, function (i, item) {
+                        usersList.innerHTML += `<a href="?controller=AbrirSalaChat&id=${item.id}">
+                                <div class="content">
+                                <img src="${item.image}" alt="">
+                                <div class="details">
+                                    <span>${item.name}</span>
+                                    
+                                </div>
+                                </div>
+                                <div class="status-dot"><i class="fas fa-circle"></i></div>
+    
+                            </a>`;
+                    });
+
+                }
+            }
+        }
+    }
+    xhr.send(); 
+
+
 }
 
 let MostrarSalasChat = function () {
-    const searchBar = document.querySelector(".search input"),
-        searchIcon = document.querySelector(".search button"),
-        usersList = document.querySelector(".users-list");
+}
+
+let Chats = function () {
+    
+    const form = document.querySelector(".typing-area"),
+    incoming_id = form.querySelector(".incoming_id").value,
+    inputField = form.querySelector(".input-field"),
+    sendBtn = form.querySelector("button"),
+    chatBox = document.querySelector(".chat-box");
+    
+    form.onsubmit = (e)=>{
+        e.preventDefault();
+    }
+    
+    inputField.focus();
+    inputField.onkeyup = ()=>{
+        if(inputField.value != ""){
+            sendBtn.classList.add("active");
+        }else{
+            sendBtn.classList.remove("active");
+        }
+    }
+    
+    sendBtn.onclick = ()=>{
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "?controller=EnviarMensajesChat", true);
+        xhr.onload = ()=>{
+          if(xhr.readyState === XMLHttpRequest.DONE){
+              if(xhr.status === 200){
+                  inputField.value = "";
+                  scrollToBottom();
+              }
+          }
+        }
+        let formData = new FormData(form);
+        xhr.send(formData);
+    }
+    chatBox.onmouseenter = ()=>{
+        chatBox.classList.add("active");
+    }
+    
+    chatBox.onmouseleave = ()=>{
+        chatBox.classList.remove("active");
+    }
+    
     setInterval(() =>{
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "?controller=MostrarSalasChat", true);
+        xhr.open("POST", "../modelo/get-chat.php", true);
         xhr.onload = ()=>{
           if(xhr.readyState === XMLHttpRequest.DONE){
               if(xhr.status === 200){
                 let data = xhr.response;
-                if(!searchBar.classList.contains("active")){
-                  usersList.innerHTML = data;
-                }
+                chatBox.innerHTML = data;
+                if(!chatBox.classList.contains("active")){
+                    scrollToBottom();
+                  }
               }
           }
         }
-        xhr.send();
-      }, 500);
-        
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("incoming_id="+incoming_id);
+    }, 500);
+    
+    function scrollToBottom(){
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+      
 }

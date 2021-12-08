@@ -20,9 +20,13 @@
                         <section class="chat-area">
                             <header> 
                                 <a href="?controller=salasdechat" class="back-icon"><i class="fas fa-arrow-left"></i></a>
-                                <img src="http://localhost/chat/modelo/images/1638457284Profile%20github.png" alt="">
+                                <img src="<?php if ($image['image'] != null) {
+                                        echo $image['image'];
+                                    } else {
+                                        echo 'https://img.icons8.com/office/16/000000/box-important--v3.gif';
+                                    } ?>" alt="">
                                 <div class="details">
-                                    <span>YEIMAR LEMUS</span>
+                                    <span><?= $SalaChat; ?></span>
                                     <p>Activo Ahora</p>
                                 </div>
                             </header>
@@ -30,7 +34,7 @@
 
                             </div>
                             <form action="#" class="typing-area">
-                                <input type="text" class="incoming_id" name="incoming_id" value="2345678" hidden>
+                                <input type="text" class="incoming_id" name="incoming_id" value="<?= $SalaChat; ?>" hidden>
                                 <input type="text" name="message" class="input-field" placeholder="Escribe un mensaje aquí ..." autocomplete="off">
                                 <button><i class="fab fa-telegram-plane"></i></button>
                             </form>

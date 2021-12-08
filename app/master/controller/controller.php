@@ -4,7 +4,7 @@ require_once 'app/master/models/app_autoload.php';
 //Funciones para requerir encabezado, pie de pagina y menu
 function higher()
 {
-    $user = $_SESSION['user'];
+    $user = $_SESSION['Master'];
     $resultado = crud::Read(query::ReadName($user));
     require_once 'app/master/views/template/header.phtml';
 }
@@ -23,11 +23,11 @@ function lower()
 
 class controller
 {
-    //Filtrando Sala desde Nav
+    //Filtrando Sala desde salas de chat
     public static function FiltrarSalasChat()
     {
-        $filtrarNav = '';
-        $user = $_SESSION['user'];
+        $searchTerm = '';
+        $user = $_SESSION['Master'];
         if (!isset($_POST['searchTerm'])) {
 
             //Recibiendo Salas de chat abiertas desde la app de whatsapp
@@ -67,36 +67,62 @@ class controller
             $Array = array();
             if (mysqli_num_rows($consulta) > 0) {
                 while ($rows = mysqli_fetch_assoc($consulta)) {
-                    $Array = '<a href="?controller=AbrirSalaChat?id='. $rows['id'].'">
+                    $Array[$i]['id'] = $rows['id'];
+                    $Array[$i]['name'] = $rows['name'];
+                    $Array[$i]['image'] = $rows['image'];
+                    $Array[$i]['last_time'] = $rows['last_time'];
+                    $Array[$i]['abierto'] = $rows['abierto'];
+                    $Array[$i]['seguimiento'] = $rows['seguimiento'];
+                    $Array[$i]['Asignador'] = $rows['Asignador'];
+                    $Array[$i]['idAgentes'] = $rows['idAgentes'];
+                    $i++;
+                    /* $Array = '<a href="?controller=AbrirSalaChat?id='. $rows['id'].'">
                     <div class="content">
                     <img src="'. $rows['image'].'" alt="">
                     <div class="details">
                         <span>'. $rows['name'].'</span>
-                        
                     </div>
                     </div>
                     <div class="status-dot"><i class="fas fa-circle"></i></div>
-                   
                 </a>
-                ';
+                '; */
                 }
             } else {
-               $Array = 'No se encontró ningún resultado relacionado con su término de búsqueda';
+                $Array = [
+                    'name' => 'No se encontró ningún resultado relacionado con su término de búsqueda'
+                ];
             }
-            echo $Array;
+            print json_encode($Array, JSON_PRETTY_PRINT);
         }
+    }
+    public static function MostrarSalasChat()
+    {
+        $query = crud::Read(query::ReadDialogs());
+        $i = 0;
+        $output = array();
+        if (mysqli_num_rows($query) == 0) {
+            $output = 'No hay usuarios disponibles para chatear';
+        } elseif (mysqli_num_rows($query) > 0) {
+            while ($rows = mysqli_fetch_assoc($query)) {
+                $output[$i]['id'] = $rows['id'];
+                $output[$i]['name'] = $rows['name'];
+                $output[$i]['image'] = $rows['image'];
+                $i++;
+            }
+        }
+        echo json_encode($output, JSON_PRETTY_PRINT);
     }
 
 
     //DashBoard
     public static function Inicio()
     {
-        if (isset($_SESSION['user'])) {
+        if (isset($_SESSION['Master'])) {
 
 
             //Logica para cerrar chat
             if (isset($_POST['btnCerrarChatConMensaje'])) {
-                $user = $_SESSION['user'];
+                $user = $_SESSION['Master'];
 
 
                 //Envio de mensaje pregrabado
@@ -122,14 +148,20 @@ class controller
                 $id = $_POST['btnCerrarChat'] . '@c.us';
                 crud::Update(query::UpdateDialogsCerrarChat($id));
             }
+
             higher();
             /* Nav(); */
+
+
             require_once 'app/master/views/dashboard/dashboard.phtml';
+
+
             lower();
         } else {
             header('Location:?controller=Login');
         }
     }
+
 
     //Validacion cuando ingresan al login logeados
     public static function Login()
@@ -325,7 +357,6 @@ class controller
         $id = $_POST['id'];
         crud::Delete(query::DeleteAgentes($id));
         echo 'El Agente ha sido eliminado';
-        
     }
 
     //Cambiando Contraseña de los Agentes usando Ajax por metodo post
@@ -357,27 +388,18 @@ class controller
     //Abrir Sala de chat individual
     public static function AbrirSalaChat()
     {
-        $id = str_replace('@c.us', '', $_GET['Id']);
-        higher();
-
-
-        //chat de usuario
-        require_once 'app/master/views/chat/chat.phtml';
-        lower();
-
         //Condicion para obligar a tener si o si una sala de chat
-
-        /* if (!empty($_POST['btnAbrirChat']) || isset($_POST['btnAddSalaChat'])) {
+        if (!empty($_GET['id']) || isset($_POST['btnAddSalaChat'])) {
 
             //Condicion para Agregar nuevo chat o no
             if (!empty($_POST['NumeroCliente'])) {
                 $user = $_SESSION['Master'];
-                $id = $_POST['codigopais'] . $_POST['NumeroCliente'] . '@c.us';
-                $SalaChat = $_POST['codigopais'] . $_POST['NumeroCliente'];
+                $id = $_POST['CodigoPais'] . $_POST['NumeroCliente'] . '@c.us';
+                $SalaChat = $_POST['CodigoPais'] . $_POST['NumeroCliente'];
             } else {
                 $user = $_SESSION['Master'];
-                $id = $_POST['btnAbrirChat'];
-                $SalaChat = str_replace('@c.us', '', $_POST['btnAbrirChat']);
+                $id = $_GET['id'];
+                $SalaChat = str_replace('@c.us', '', $_GET['id']);
             }
 
             //Imagen Guardada
@@ -393,13 +415,14 @@ class controller
             $consulta = mysqli_fetch_assoc(crud::Read(query::ReadMensajeDespedidaChat($user)));
 
             higher();
-            Nav();
+            
             require_once 'app/master/views/chat/chat.phtml';
             lower();
         } else {
             header('Location:./');
-        } */
+        }
     }
+
 
     //Mostrar Mensajes de chat individual
     public static function MostrarMensajesChat()
@@ -556,7 +579,7 @@ class controller
         $usuario = $_SESSION['Master'];
         $success = crud::Create(query::CreateMensajeDespedida($cuerpo, $usuario));
         if ($success != null) {
-            echo 'Mensaje Agregado Exitosamente'; 
+            echo 'Mensaje Agregado Exitosamente';
         } else {
             echo 'Algo salio mal';
         }
@@ -653,7 +676,7 @@ class controller
     {
         $id = str_replace('@c.us', '', $_GET['Id']);
         higher();
-        
+
 
 
         require_once 'app/master/views/TransferenciaChat/TransferenciaChat.phtml';
@@ -705,7 +728,7 @@ class controller
     }
 
     //Mostrar Tabla Dialogs totales
-    public static function MostrarSalasChat()
+    public static function MostrarTablaChatAcumulado()
     {
         $datos = '';
         if (isset($_POST['FiltroTablaTotal'])) {
@@ -717,11 +740,11 @@ class controller
             $i = 0;
             $Array = array();
             while ($row = mysqli_fetch_assoc($consulta)) {
-                $Array = '<a href="?controller=AbrirSalaChat?id='. $row['id'].'">
+                $Array = '<a href="?controller=AbrirSalaChat?id=' . $row['id'] . '">
                 <div class="content">
-                <img src="'. $row['image'].'" alt="">
+                <img src="' . $row['image'] . '" alt="">
                 <div class="details">
-                    <span>'. $row['name'].'</span>
+                    <span>' . $row['name'] . '</span>
                     
                 </div>
                 </div>
@@ -729,18 +752,18 @@ class controller
                
             </a>
             ';
-            $i++;
+                $i++;
             }
         } else if (empty($datos)) {
             $consulta = crud::Read(query::ReadDialogs());
             $i = 0;
             $Array = array();
             while ($row = mysqli_fetch_assoc($consulta)) {
-                $Array = '<a href="?controller=AbrirSalaChat?id='. $row['id'].'">
+                $Array = '<a href="?controller=AbrirSalaChat?id=' . $row['id'] . '">
                 <div class="content">
-                <img src="'. $row['image'].'" alt="">
+                <img src="' . $row['image'] . '" alt="">
                 <div class="details">
-                    <span>'. $row['name'].'</span>
+                    <span>' . $row['name'] . '</span>
                     
                 </div>
                 </div>
@@ -748,7 +771,7 @@ class controller
                
             </a>
             ';
-            $i++;
+                $i++;
             }
         }
         echo $Array;
@@ -853,7 +876,7 @@ class controller
 
 
             higher();
-            
+
             require_once 'app/master/views/chat/chat.phtml';
             lower();
         } else {
@@ -1116,7 +1139,4 @@ class controller
         }
         print json_encode($Array, JSON_PRETTY_PRINT);
     }
-
-
-
 }
