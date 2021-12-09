@@ -540,6 +540,12 @@ class controller
         //echo $Phone.' '.$message;
     }
 
+    //Obtener Chats
+    public static function ObtenerChats()
+    {
+        $user = $_SESSION['Master'];
+    }
+
     //Cantidad Salas de Chat
     public static function CantidadSalasChat()
     {

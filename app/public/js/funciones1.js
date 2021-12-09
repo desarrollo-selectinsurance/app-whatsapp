@@ -1,6 +1,6 @@
 $(document).ready(function () {
     console.log('Hola desde jquery');
-
+   
     //$.ajaxSetup({ "cache": false });//Manejo de cache de Jquery
 
 

@@ -2,29 +2,29 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-<?php require_once "app/master/views/template/sidebar.phtml"; ?>
+        <?php require_once "app/master/views/template/sidebar.phtml"; ?>
 
-        
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
 
-                
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <div class="wrapper-chat">
                         <section class="chat-area">
-                            <header> 
+                            <header>
                                 <a href="?controller=salasdechat" class="back-icon"><i class="fas fa-arrow-left"></i></a>
                                 <img src="<?php if ($image['image'] != null) {
-                                        echo $image['image'];
-                                    } else {
-                                        echo 'https://img.icons8.com/office/16/000000/box-important--v3.gif';
-                                    } ?>" alt="">
+                                                echo $image['image'];
+                                            } else {
+                                                echo 'https://img.icons8.com/office/16/000000/box-important--v3.gif';
+                                            } ?>" alt="">
                                 <div class="details">
                                     <span><?= $SalaChat; ?></span>
                                     <p>Activo Ahora</p>
@@ -33,14 +33,14 @@
                             <div class="chat-box">
 
                             </div>
-                            <form action="#" class="typing-area">
+                             <form action="?conntroller=EnviarMensaje" id="typingForm"  class="typing-area">
                                 <input type="text" class="incoming_id" name="incoming_id" value="<?= $SalaChat; ?>" hidden>
-                                <input type="text" name="message" class="input-field" placeholder="Escribe un mensaje aquí ..." autocomplete="off">
-                                <button><i class="fab fa-telegram-plane"></i></button>
+                                <input type="text" name="messages" id="messages"   class="form-control" placeholder="Escribe un mensaje aquí ..." autocomplete="off" >
+                                <button type="button"class="btn btn-outline-primary"  id="btnEnviarMensaje"><i class="fab fa-telegram-plane"></i></button>
                             </form>
                         </section>
                     </div>
-                    
+
                 </div>
                 <!-- /.container-fluid -->
 

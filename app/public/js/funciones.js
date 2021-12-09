@@ -1,6 +1,15 @@
 $(document).ready(function () {
     console.log('Hola de Jquery');
 
+    //Emojis para el inpul de el chat
+    $("#message").emojioneArea({
+        pickerPosition: "top",
+        filtersPosition: "bottom",
+        searchPlaceholder: "Buscar...",
+        language: "es",
+
+    });
+
     //Call Back de todas las Tablas del sitema
     ReadAgentes();
     TablaChatAsignadoAgente();
@@ -27,7 +36,9 @@ $(document).ready(function () {
 
     //Chat Directo
 
-    Chats();
+   EnviarMensajes();
+
+    //Emojis
 
 
 
@@ -745,7 +756,7 @@ let FiltrarSalasChat = function () {
         xhr.send("searchTerm=" + searchTerm);
     }
 
-   let xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("GET", "?controller=MostrarSalasChat", true);
     xhr.onload = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -753,6 +764,7 @@ let FiltrarSalasChat = function () {
                 let data = JSON.parse(xhr.response);
                 if (!searchBar.classList.contains("active")) {
                     $.each(data, function (i, item) {
+
                         usersList.innerHTML += `<a href="?controller=AbrirSalaChat&id=${item.id}">
                                 <div class="content">
                                 <img src="${item.image}" alt="">
@@ -770,7 +782,7 @@ let FiltrarSalasChat = function () {
             }
         }
     }
-    xhr.send(); 
+    xhr.send();
 
 
 }
@@ -778,69 +790,45 @@ let FiltrarSalasChat = function () {
 let MostrarSalasChat = function () {
 }
 
-let Chats = function () {
-    
-    const form = document.querySelector(".typing-area"),
-    incoming_id = form.querySelector(".incoming_id").value,
-    inputField = form.querySelector(".input-field"),
-    sendBtn = form.querySelector("button"),
-    chatBox = document.querySelector(".chat-box");
-    
-    form.onsubmit = (e)=>{
+//Enviar mensajes de chat
+var EnviarMensajes = function () {
+    function validate(e) {
+        var form = $('#frmMostrarChat').serialize();
+        $.ajax({
+            type: "POST",
+            url: "?controller=EnviarMensajesChat",
+            data: form,
+            success: function (Respuesta) {
+                console.log(Respuesta);
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        //MostrarMensajesChat();
+        $('#txtCuerpoMensage').val('');
+    }
+
+    $('#btnEnviarMensajeWhatsapp').click(function (e) {
         e.preventDefault();
-    }
-    
-    inputField.focus();
-    inputField.onkeyup = ()=>{
-        if(inputField.value != ""){
-            sendBtn.classList.add("active");
-        }else{
-            sendBtn.classList.remove("active");
-        }
-    }
-    
-    sendBtn.onclick = ()=>{
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "?controller=EnviarMensajesChat", true);
-        xhr.onload = ()=>{
-          if(xhr.readyState === XMLHttpRequest.DONE){
-              if(xhr.status === 200){
-                  inputField.value = "";
-                  scrollToBottom();
-              }
-          }
-        }
-        let formData = new FormData(form);
-        xhr.send(formData);
-    }
-    chatBox.onmouseenter = ()=>{
-        chatBox.classList.add("active");
-    }
-    
-    chatBox.onmouseleave = ()=>{
-        chatBox.classList.remove("active");
-    }
-    
-    setInterval(() =>{
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "../modelo/get-chat.php", true);
-        xhr.onload = ()=>{
-          if(xhr.readyState === XMLHttpRequest.DONE){
-              if(xhr.status === 200){
-                let data = xhr.response;
-                chatBox.innerHTML = data;
-                if(!chatBox.classList.contains("active")){
-                    scrollToBottom();
-                  }
-              }
-          }
-        }
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("incoming_id="+incoming_id);
-    }, 500);
-    
-    function scrollToBottom(){
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-      
+
+        var form = $('#frmMostrarChat').serialize();
+        $.ajax({
+            type: "POST",
+            url: "?controller=EnviarMensajesChat",
+            data: form,
+            success: function (Respuesta) {
+                console.log(Respuesta);
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        //MostrarMensajesChat();
+        $('#txtCuerpoMensage').val('');
+    });
 }
