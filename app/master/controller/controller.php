@@ -534,8 +534,8 @@ class controller
         $user = $_SESSION['Master'];
         $UrlToken = mysqli_fetch_assoc(crud::Read(query::ReadAwebT($user)));
         $Api = new ChatApi($UrlToken['Instance'], $UrlToken['Token']);
-        $Phone = $_POST['chatId'];
-        $message = $_POST['txtCuerpoMensage'];
+        $Phone = $_POST['incoming_phone'];
+        $message = $_POST['messagess'];
         echo $Api->SendMenssage($Phone, $message);
         //echo $Phone.' '.$message;
     }

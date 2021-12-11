@@ -2,7 +2,7 @@ $(document).ready(function () {
     console.log('Hola de Jquery');
 
     //Emojis para el inpul de el chat
-    $("#message").emojioneArea({
+    $("#messagess").emojioneArea({
         pickerPosition: "top",
         filtersPosition: "bottom",
         searchPlaceholder: "Buscar...",
@@ -31,12 +31,13 @@ $(document).ready(function () {
     EliminarToken();
 
     //Funcion para Filtrar y mostrar las salas de chat
-    FiltrarSalasChat();
+   /*  FiltrarSalasChat(); */
     MostrarSalasChat();
 
     //Chat Directo
 
    EnviarMensajes();
+   
 
     //Emojis
 
@@ -706,7 +707,7 @@ let EliminarToken = function () {
 
 }
 
-let FiltrarSalasChat = function () {
+/* let FiltrarSalasChat = function () {
 
     const searchBar = document.querySelector(".search input"),
         searchIcon = document.querySelector(".search button"),
@@ -785,40 +786,21 @@ let FiltrarSalasChat = function () {
     xhr.send();
 
 
-}
+} */
 
 let MostrarSalasChat = function () {
 }
 
 //Enviar mensajes de chat
-var EnviarMensajes = function () {
-    function validate(e) {
-        var form = $('#frmMostrarChat').serialize();
-        $.ajax({
-            type: "POST",
-            url: "?controller=EnviarMensajesChat",
-            data: form,
-            success: function (Respuesta) {
-                console.log(Respuesta);
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr);
-                console.log(status);
-                console.log(error);
-            }
-        });
-        //MostrarMensajesChat();
-        $('#txtCuerpoMensage').val('');
-    }
-
-    $('#btnEnviarMensajeWhatsapp').click(function (e) {
+let EnviarMensajes = function () {
+    $('#btnsendMessage').click(function (e) {
         e.preventDefault();
-
-        var form = $('#frmMostrarChat').serialize();
+        let FormData = $('#typingForm').serialize();
+        console.log(FormData);
         $.ajax({
             type: "POST",
             url: "?controller=EnviarMensajesChat",
-            data: form,
+            data: FormData,
             success: function (Respuesta) {
                 console.log(Respuesta);
             },
@@ -829,6 +811,33 @@ var EnviarMensajes = function () {
             }
         });
         //MostrarMensajesChat();
-        $('#txtCuerpoMensage').val('');
+        $(".emojionearea-editor").html('');
     });
+}
+//Enviar mensajes de chat con Enter
+let EnviarMensajesPressEnter = function () {
+    let wage = document.getElementById("messagess");
+    console.log(wage);
+    wage.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+            let FormData = $('#typingForm').serialize();
+            console.log(FormData);
+            $.ajax({
+                type: "POST",
+                url: "?controller=EnviarMensajesChat",
+                data: FormData,
+                success: function (Respuesta) {
+                    console.log(Respuesta);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            //MostrarMensajesChat();
+            $(".emojionearea-editor").html('');
+        }
+    });
+    EnviarMensajes();
 }
